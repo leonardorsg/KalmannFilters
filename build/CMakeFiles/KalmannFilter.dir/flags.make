@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/src -I/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/src/GTFS
+CXX_INCLUDES = -I/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/src -I/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/src/GTFS -I/usr/include/eigen3
 
 CXX_FLAGS = -std=gnu++14
 

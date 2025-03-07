@@ -153,6 +153,30 @@ src/Application.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/src/Application.cpp.s
 .PHONY : src/Application.cpp.s
 
+src/KalmannFilter.o: src/KalmannFilter.cpp.o
+.PHONY : src/KalmannFilter.o
+
+# target to build an object file
+src/KalmannFilter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/src/KalmannFilter.cpp.o
+.PHONY : src/KalmannFilter.cpp.o
+
+src/KalmannFilter.i: src/KalmannFilter.cpp.i
+.PHONY : src/KalmannFilter.i
+
+# target to preprocess a source file
+src/KalmannFilter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/src/KalmannFilter.cpp.i
+.PHONY : src/KalmannFilter.cpp.i
+
+src/KalmannFilter.s: src/KalmannFilter.cpp.s
+.PHONY : src/KalmannFilter.s
+
+# target to generate assembly for a file
+src/KalmannFilter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/src/KalmannFilter.cpp.s
+.PHONY : src/KalmannFilter.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... src/Application.o"
 	@echo "... src/Application.i"
 	@echo "... src/Application.s"
+	@echo "... src/KalmannFilter.o"
+	@echo "... src/KalmannFilter.i"
+	@echo "... src/KalmannFilter.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

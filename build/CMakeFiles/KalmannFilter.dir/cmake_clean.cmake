@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/KalmannFilter.dir/src/Application.cpp.o"
   "CMakeFiles/KalmannFilter.dir/src/Application.cpp.o.d"
+  "CMakeFiles/KalmannFilter.dir/src/KalmannFilter.cpp.o"
+  "CMakeFiles/KalmannFilter.dir/src/KalmannFilter.cpp.o.d"
   "CMakeFiles/KalmannFilter.dir/src/main.cpp.o"
   "CMakeFiles/KalmannFilter.dir/src/main.cpp.o.d"
   "KalmannFilter"
