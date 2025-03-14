@@ -8,6 +8,8 @@
 
 using json = nlohmann::json;
 
+//RUN COMMAND : g++ -std=c++14 -o JsonDataFetcher JsonDataFetcher.cpp -lcurl
+
 // Function to handle data received by libcurl
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* outString) {
     size_t totalSize = size * nmemb;
@@ -78,7 +80,7 @@ void fetchAndStorePeriodically(const std::string& url, const std::string& output
 
 int main() {
     const std::string url = "https://broker.fiware.urbanplatform.portodigital.pt/v2/entities?q=vehicleType==bus&limit=1000";
-    const std::string outputFilePath = "bus_data.json";
+    const std::string outputFilePath = "../Dataset/Porto/bus_data.json";
     const int intervalSeconds = 30; // Fetch every 30 seconds
 
     fetchAndStorePeriodically(url, outputFilePath, intervalSeconds);

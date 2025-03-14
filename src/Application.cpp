@@ -1,22 +1,28 @@
 #include "Application.h"
-#include <Eigen>
 
 void Application::run(int processedKey) {
     L1:
     clearScreen();
-    while (processedKey == -1){
-        clearScreen();
-        processedKey = processKey(showMainMenu());
-    }
 
     switch (processedKey) {
         case 1:
-            //backtrackingAlgorithmTSP();
+            std::string stop_id;
+            std::cout << "Please enter the stop id: ";
+            std::cin >> stop_id;
+            std::cout << std::endl;
+
+
+            int bus_line;
+            std::cout << "Please enter the bus line: ";
+            std::cin >> bus_line;
+            std::cout << std::endl;
+
+            runKalmannFilter(bus_line, stop_id);
             std::cout << 1;
             break;
         case 2:
-            //dataGoBoom();
             std::cout << "Thank you very much and Bye-Bye.\n";
+            delay(4);
             break;
         default:
             goto L1;
@@ -61,7 +67,7 @@ int Application::processKey(const std::string& option) {
 /**
  * @brief Shows the main menu
  */
-std::string Application::showMainMenu() {
+void Application::showMainMenu() {
     std::string opti;
     std::cout << "\nSelect an operation you would like to do:\n\n"
               << "1 - Execute algorithm.\n"
@@ -70,7 +76,7 @@ std::string Application::showMainMenu() {
     std::cout << "Input: ";
     std::cin >> opti;
     std::cout << "\n";
-    return opti;
+    run(stoi(opti));
 }
 
 /**

@@ -25,12 +25,13 @@ int main() {
     if (nextRun == -2 ){
         goto chooseDifferentGraph;
     }
+    /*
     try {
         app.run(nextRun);
     } catch (std::invalid_argument &invalid_argument) {
         nextRun = std::stoi(invalid_argument.what());
         goto goBack;
-    }
+    }*/
 
     return 0;
 }
