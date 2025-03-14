@@ -17,7 +17,6 @@ include_directories(${EIGEN3_INCLUDE_DIRS})
 # Define the main source files
 add_executable(KalmannFilter
         ${CMAKE_SOURCE_DIR}/src/Application.cpp
-        ${CMAKE_SOURCE_DIR}/src/Graph.h
         ${CMAKE_SOURCE_DIR}/src/main.cpp
         ${CMAKE_SOURCE_DIR}/src/MutablePriorityQueue.h
         ${CMAKE_SOURCE_DIR}/src/Parser.h

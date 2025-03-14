@@ -10,6 +10,14 @@
 #include <cmath>
 #include <iostream>
 #include <list>
+#include <map>
+#include <vector>
+#include <bits/random.h>
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 
 using namespace Eigen;
 
@@ -27,7 +35,7 @@ class Utils {
     Utils(){};
 
     //Function to calculate the distance between two coordinates
-    double vincentyFormula(Coordinates coordinate1, Coordinates coordinate2) {
+    static double vincentyFormula(Coordinates coordinate1, Coordinates coordinate2) {
         // Convert degrees to radians
         double lat1 = coordinate1.Latitude;
         double lat2 = coordinate2.Latitude;
@@ -86,6 +94,54 @@ class Utils {
         }
 
         return totalDistance;
+    }
+
+    static std::vector<double> generateTimes(int num_values) {
+        // Seed the random number generator
+        std::srand(static_cast<unsigned>(std::time(0)));
+
+        // Vector to hold the random values
+        std::vector<double> values;
+
+        // Generate random values between 0 and 3000
+        for (int i = 0; i < num_values; ++i) {
+            double random_value = static_cast<double>(std::rand()) / RAND_MAX * 3000.0;
+            values.push_back(random_value);
+        }
+
+        // Sort the values in ascending order
+        std::sort(values.begin(), values.end());
+
+        return values;
+    }
+
+    static MatrixXd generateMeasurements(unsigned int maxSamples, double totalDistance) {
+        MatrixXd measurements(maxSamples, 3); // [d, v, a]
+
+        // Generate evenly spaced distances between 0 and totalDistance
+        double stepSize = totalDistance / (maxSamples - 1); // Step size to ensure maxSamples distances
+        for (unsigned int i = 0; i < maxSamples; i++) {
+            measurements(i, 0) = i * stepSize;  // Distance (d)
+            measurements(i, 1) = 0;              // Velocity (v)
+            measurements(i, 2) = 0;              // Acceleration (a)
+        }
+
+        return measurements;
+    }
+
+    // Calculate total distance for each trip
+    static std::map<std::string, double> calculateTripDistances(const std::map<std::string, std::vector<Coordinates>> &trips) {
+        std::map<std::string, double> tripDistances;
+
+        for (const auto &[shape_id, coordinates] : trips) {
+            double totalDistance = 0.0;
+            for (size_t i = 1; i < coordinates.size(); i++) {
+                totalDistance += vincentyFormula(coordinates[i - 1], coordinates[i]);
+            }
+            tripDistances[shape_id] = totalDistance;
+        }
+
+        return tripDistances;
     }
 
     static MatrixXd convertData();

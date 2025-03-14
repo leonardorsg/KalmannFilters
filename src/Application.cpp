@@ -5,7 +5,7 @@ void Application::run(int processedKey) {
     clearScreen();
 
     switch (processedKey) {
-        case 1:
+        case 1: {
             std::string stop_id;
             std::cout << "Please enter the stop id: ";
             std::cin >> stop_id;
@@ -18,8 +18,8 @@ void Application::run(int processedKey) {
             std::cout << std::endl;
 
             runKalmannFilter(bus_line, stop_id);
-            std::cout << 1;
             break;
+        }
         case 2:
             std::cout << "Thank you very much and Bye-Bye.\n";
             delay(4);
@@ -106,9 +106,6 @@ void Application::showGoBackMenu(int functionNumber, const std::string& function
             goto L1;
         case 1:
             throw std::invalid_argument("-1");
-        case 2:
-            // the no-no function -> run(functionNumber)
-            throw std::invalid_argument(std::to_string(functionNumber));
         default:
             std::cout << "\n* Error while parsing option, please input a valid numeric option. *\n";
             goto L1;

@@ -13,6 +13,7 @@ class Route {
         std::string route_long_name;
         int route_type;
         std::string route_url;
+
     public:
 
         Route() : route_id(0), route_short_name(""), route_long_name(""), route_type(0), route_url("") {}

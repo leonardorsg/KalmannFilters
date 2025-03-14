@@ -33,6 +33,7 @@ class Parser {
         std::string stops_times_file;
         std::string stops_file;
         std::string trips_file;
+        std::string shapes_file;
 
 
         std::list<Agency> agencyList;
@@ -42,6 +43,8 @@ class Parser {
         std::unordered_map<int, Route> routeHashTable; // Key: route_id, Value: Route object
         std::unordered_map<std::string, Stops> stopsHashTable; // Key: stop_id, Value: Stops object
         std::unordered_map<int, Trips> tripsHashTable; // Key: trip_id, Value: Trips object
+        std::map<std::string, std::vector<Coordinates>> shapes; //to calculate the shapes.txt
+
 
 
     public:
@@ -131,13 +134,14 @@ class Parser {
         }
 
 
-        Parser(std::string agency_file, std::string calendar_file, std::string routes_file, std::string stops_times_file, std::string stops_file, std::string trips_file) {
+        Parser(std::string agency_file, std::string calendar_file, std::string routes_file, std::string stops_times_file, std::string stops_file, std::string trips_file, std::string shapes_file) {
             this->agency_file = agency_file;
             this->calendar_file = calendar_file;
             this->routes_file = routes_file;
             this->stops_times_file = stops_times_file;
             this->stops_file = stops_file;
             this->trips_file = trips_file;
+            this->shapes_file = shapes_file;
 
         }
 
@@ -352,9 +356,9 @@ class Parser {
 
             while (std::getline(file, line)) {
                 std::istringstream s(line);
-                std::string route_id,direction_id,service_id, trip_id,trip_headsign, unused;
+                std::string route_id,direction_id,service_id, trip_id,trip_headsign, unused, shape_id;
                 if (!(std::getline(s, route_id, ',') && std::getline(s, direction_id, ',') && std::getline(s, service_id, ',') &&
-                    std::getline(s, trip_id, ',') && std::getline(s, trip_headsign, ','))) {
+                    std::getline(s, trip_id, ',') && std::getline(s, trip_headsign, ',') && std::getline(s, unused, ',') && std::getline(s, unused, ',') && std::getline(s, shape_id, '\r') )) {
                     std::cerr << "Error parsing agency file" << std::endl;
                     return -1;
                     }
@@ -363,8 +367,9 @@ class Parser {
                 stringToLower(route_id);
                 stringToLower(service_id);
                 stringToLower(trip_headsign);
+                stringToLower(shape_id);
 
-                Trips trip(std::stoi(trip_id), route_id, std::stoi(direction_id), service_id, trip_headsign);
+                Trips trip(std::stoi(trip_id), route_id, std::stoi(direction_id), service_id, trip_headsign, shape_id);
 
                 insertTrip(std::stoi(trip_id), trip);
 
@@ -450,11 +455,29 @@ class Parser {
     }
 }
 
-    // Retrieve the list of vehicles
-    const std::vector<Vehicle>& getVehicles() const {
-        return vehicles;
-    }
+    // Read CSV and group coordinates by shape_id
+    int parseShapes() {
+            std::ifstream file(this->shapes_file);
+            std::string line, shape_id;
+            double lat, lon;
 
+            // Skip header
+            std::getline(file, line);
+
+            while (std::getline(file, line)) {
+                std::stringstream ss(line);
+                std::string temp;
+
+                std::getline(ss, shape_id, ',');   // shape_id
+                std::getline(ss, temp, ',');       // lat
+                lat = std::stod(temp);
+                std::getline(ss, temp, ',');       // lon
+                lon = std::stod(temp);
+
+                shapes[shape_id].push_back({lat, lon});
+            }
+            return 0;
+        }
 
     std::string run() {
         if (parseAgency() < 0) return "Agency file is invalid";
@@ -463,12 +486,22 @@ class Parser {
         if (parseStops() < 0) return "Stops file is invalid";
         if (parseStopsTimes() < 0) return "Stops times file is invalid";
         if (parseTrips() < 0) return "Trips file is invalid";
-        return "Success";
+        if (parseShapes() < 0) return "Shapes file is invalid";
+            return "Success";
     }
 
 
 
     // Getters
+    //Retrive the list of trips
+    const std::map<std::string, std::vector<Coordinates>>& getShapes() {
+            return shapes;
+        }
+
+    // Retrieve the list of vehicles
+    const std::vector<Vehicle>& getVehicles() const {
+            return vehicles;
+        }
 
     std::list<Agency> getAgencies () {return agencyList;}
     std::list<Calendar> getCalendars () {return calendarList;}
