@@ -114,7 +114,6 @@ public:
         double h = 0.1;
 
         Matrix<double,3,3> A {{1,h,0.5*(h*h)}, {0, 1 , h}, {0,0,1}};
-        Matrix<double,3,1> B {{0}, {0}, {0}};
         Matrix<double,1,3> C {{1,0,0}};
 
         MatrixXd P0; P0.resize(3,3); P0 = MatrixXd::Identity(3,3);
@@ -124,8 +123,9 @@ public:
 
         MatrixXd inputMeasurements, outputMeasurements;
         //Since we are only dealing with distances
-        inputMeasurements.resize(1,1);
-        outputMeasurements.resize(1,1);
+        inputMeasurements.resize(3,1);
+        outputMeasurements.resize(3,1);
+        outputMeasurements.setZero();
         inputMeasurements.setZero();
 
         std::map<std::string, std::vector<Coordinates>> tripShape = this->portoParser->getShapes();
@@ -134,6 +134,8 @@ public:
         std::string shape_id = trips.at(bus_line).getShapeId();
         double totalDistance = tripDistances.at(shape_id);
 
+        std::cout << "Total Distance: " << totalDistance << '\n';
+
         MatrixXd measurements = MatrixXd::Zero(1,3);
         std::vector<double> times;
 
@@ -141,30 +143,66 @@ public:
             measurements = Utils::generateMeasurements(100,totalDistance);
             times = Utils::generateTimes(100);
         } //else{}
+
         unsigned int maxSamples = measurements.rows();
 
-        KalmannFilter kf(A,B,C,Q,R,P0,x0,maxSamples);
+        /*
+        std::cout << "Measurements: " << std::endl;
+
+        for (unsigned int i = 0; i < measurements.rows(); i++) {
+            std::cout << "row: " << i << "[";
+            for (unsigned int j = 0; j < measurements.cols(); j++) {
+                std::cout << measurements(i,j) << ",";
+            }
+            std::cout << "]\n";
+        }
+
+        std::cout << "Times: " << std::endl;
+
+        for (auto time : times) {
+            std::cout << time << '\n';
+        }
+        */
+        std::cout << "Max samples: " << maxSamples << std::endl;
+
+        KalmannFilter kf(A,C,Q,R,P0,x0,maxSamples);
 
         //start counting time
         auto start = high_resolution_clock::now();
-        std::list<double> travelledMeasurements;
+
 
         //Kalmann Filter Loop
-        for (int i = 0; i < maxSamples; i++) {
-            outputMeasurements = measurements.row(i);
+        for (int i = 0; i < 15; i++) {
+            //kf.printMatrices();
+            outputMeasurements.setZero();
+            outputMeasurements(0,0) = measurements(i,0);
             kf.predictEstimate(inputMeasurements);
-            inputMeasurements.col(i + 1) = kf.updateEstimate(outputMeasurements);
-            //Insert last
-            travelledMeasurements.push_back(inputMeasurements(0, i+1));
-            double travelledDistance = Utils::getTotalDistance(travelledMeasurements);
-            auto now = high_resolution_clock::now();
-            auto duration = duration_cast<microseconds>(now - start).count() /1e6;
+            inputMeasurements = kf.updateEstimate(outputMeasurements).eval(); // Ensures a correct assignment
+
+            double travelledDistance = inputMeasurements(0,0);
+            /*
+            std::cout << "Measurements: " << std::endl;
+
+            for (unsigned int i = 0; i < inputMeasurements.rows(); i++) {
+                std::cout << "row: " << i << "[";
+                for (unsigned int j = 0; j < inputMeasurements.cols(); j++) {
+                    std::cout << inputMeasurements(i,j) << ",";
+                }
+                std::cout << "]\n";
+            }
+
+*/
+
+            //std::cout << "Received: " << outputMeasurements(0,0) << '\n';
+            //std::cout << "Travelled: " << travelledDistance << '\n';
+            //auto now = high_resolution_clock::now();
+            //auto duration = duration_cast<microseconds>(now - start).count() /1e6;
             double ETA;
             if (dataChoice == 1) {
                 ETA = (totalDistance - travelledDistance) / times[i];
-            }else if (dataChoice == 2) ETA = (totalDistance - travelledDistance) / duration;
+            }//else if (dataChoice == 2) ETA = (totalDistance - travelledDistance) / duration;
 
-            std::cout << "ETA for bus" + std::to_string(bus_line) + ":" + std::to_string(ETA) + "\n";
+            std::cout << "ETA for bus " + std::to_string(bus_line) + ":" + std::to_string(ETA) + "\n";
             std::cout << "Travelled distance: " << travelledDistance << "\n";
         }
 

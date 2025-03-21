@@ -117,7 +117,7 @@ class Utils {
 
     static MatrixXd generateMeasurements(unsigned int maxSamples, double totalDistance) {
         MatrixXd measurements(maxSamples, 3); // [d, v, a]
-
+        measurements.setZero();
         // Generate evenly spaced distances between 0 and totalDistance
         double stepSize = totalDistance / (maxSamples - 1); // Step size to ensure maxSamples distances
         for (unsigned int i = 0; i < maxSamples; i++) {

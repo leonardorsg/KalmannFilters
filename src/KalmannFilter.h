@@ -68,12 +68,14 @@ private:
 public:
     KalmannFilter();
 
-    KalmannFilter(const MatrixXd A, const MatrixXd B, MatrixXd C,
+    KalmannFilter(const MatrixXd A, MatrixXd C,
         MatrixXd Q, MatrixXd R, MatrixXd P0, MatrixXd x0, unsigned int maxSamples);
 
     MatrixXd updateEstimate(MatrixXd measurement);
 
     void predictEstimate(MatrixXd input);
+
+    void printMatrices();
 };
 
 #endif //KALMANNFILTER_H
