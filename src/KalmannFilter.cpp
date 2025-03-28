@@ -10,7 +10,7 @@ using namespace Eigen;
 
 //g++ -I/usr/include/eigen3 -o my_program my_program.cpp
 
-KalmannFilter::KalmannFilter(const MatrixXd A, MatrixXd C,
+KalmannFilter::KalmannFilter(MatrixXd &A, MatrixXd C,
         MatrixXd Q, MatrixXd R, MatrixXd P0, MatrixXd x0, unsigned int maxSamples) {
     this->k = 0;    this->A = A;
     this->C = C;    this->Q = Q;    this->R = R;
@@ -60,6 +60,10 @@ void KalmannFilter::predictEstimate(MatrixXd input) {
  * Measurement = Z(k) (observation of the true state X(k)) - C(k) * estimatesApriori(k-1)
  */
 MatrixXd KalmannFilter::updateEstimate(MatrixXd measurement) {
+
+    if (k >= estimatesAposteriori.cols()){
+        throw std::runtime_error("Exceeded maximum sample count");
+    }
 
     if (measurement.rows() != n || measurement.cols() != 1) {
         std::cerr << "Expected: " << C.rows() << "x" << 1 << ", Received: " << measurement.rows() << "x" << measurement.cols() << std::endl;
@@ -112,7 +116,7 @@ MatrixXd KalmannFilter::updateEstimate(MatrixXd measurement) {
 
 
     //CHECAR ERRO AQUI
-    this->errors.col(this->k-1) = abs(measurement.col(0) - result.col(0));
+    this->errors.col(this->k-1) = measurement.col(0) - result.col(0);
 
     this->estimatesAposteriori.col(this->k) = this->estimatesApriori.col(this->k-1) + kalmannGain(all,seq((k-1)*r,k*r-1))*errors.col(k-1);
 
@@ -145,5 +149,16 @@ void KalmannFilter::printMatrices() {
     cout << "\nMatrix covarianceApriori (Apriori Covariance):\n" << covarianceApriori << endl;
     cout << "\nMatrix kalmannGain (Kalman Gain):\n" << kalmannGain << endl;
     cout << "\nMatrix errors (Prediction Errors):\n" << errors << endl;
+}
+
+void KalmannFilter::finalize() {
+        // Ensure we don't have any pending operations
+        this->k = 0;
+        this->estimatesAposteriori.setZero();
+        this->estimatesApriori.setZero();
+        this->covarianceAposteriori.setZero();
+        this->covarianceApriori.setZero();
+        this->kalmannGain.setZero();
+        this->errors.setZero();
 }
 

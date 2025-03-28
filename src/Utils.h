@@ -116,14 +116,28 @@ class Utils {
     }
 
     static MatrixXd generateMeasurements(unsigned int maxSamples, double totalDistance) {
-        MatrixXd measurements(maxSamples, 3); // [d, v, a]
+        MatrixXd measurements(maxSamples, 3);
         measurements.setZero();
-        // Generate evenly spaced distances between 0 and totalDistance
-        double stepSize = totalDistance / (maxSamples - 1); // Step size to ensure maxSamples distances
+
+        // Generate realistic bus movement profile
+        double step = totalDistance / (maxSamples-1);
+        double current_vel = 0;
+        double max_vel = 15.0; // ~54 km/h
+
         for (unsigned int i = 0; i < maxSamples; i++) {
-            measurements(i, 0) = i * stepSize;  // Distance (d)
-            measurements(i, 1) = 0;              // Velocity (v)
-            measurements(i, 2) = 0;              // Acceleration (a)
+            // Simulate bus acceleration then deceleration
+            if (i < maxSamples/2) {
+                current_vel = std::min(max_vel, current_vel + 0.1);
+            } else {
+                current_vel = std::max(0.0, current_vel - 0.1);
+            }
+
+            // Add realistic noise (5m max error)
+            double noise = (rand() % 1000)/100.0 - 5.0;
+
+            measurements(i, 0) = i * step + noise;
+            measurements(i, 1) = current_vel + noise/10.0;
+            measurements(i, 2) = 0; // Near-zero acceleration
         }
 
         return measurements;

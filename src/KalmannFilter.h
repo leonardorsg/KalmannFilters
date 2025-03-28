@@ -68,7 +68,7 @@ private:
 public:
     KalmannFilter();
 
-    KalmannFilter(const MatrixXd A, MatrixXd C,
+    KalmannFilter(MatrixXd &A, MatrixXd C,
         MatrixXd Q, MatrixXd R, MatrixXd P0, MatrixXd x0, unsigned int maxSamples);
 
     MatrixXd updateEstimate(MatrixXd measurement);
@@ -76,6 +76,8 @@ public:
     void predictEstimate(MatrixXd input);
 
     void printMatrices();
+
+    void finalize();
 };
 
 #endif //KALMANNFILTER_H

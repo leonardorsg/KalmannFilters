@@ -109,25 +109,6 @@ public:
         std::cout << "Select: ";
         std::cin >> dataChoice;
 
-
-        //time step
-        double h = 0.1;
-
-        Matrix<double,3,3> A {{1,h,0.5*(h*h)}, {0, 1 , h}, {0,0,1}};
-        Matrix<double,1,3> C {{1,0,0}};
-
-        MatrixXd P0; P0.resize(3,3); P0 = MatrixXd::Identity(3,3);
-        Matrix<double,1,1> R {{5}};
-        MatrixXd Q; Q.resize(3,3); Q.setZero(3,3);
-        Matrix<double,3,1> x0 {{0},{0},{0}};
-
-        MatrixXd inputMeasurements, outputMeasurements;
-        //Since we are only dealing with distances
-        inputMeasurements.resize(3,1);
-        outputMeasurements.resize(3,1);
-        outputMeasurements.setZero();
-        inputMeasurements.setZero();
-
         std::map<std::string, std::vector<Coordinates>> tripShape = this->portoParser->getShapes();
         auto tripDistances = Utils::calculateTripDistances(tripShape);
         auto trips = this->portoParser->getTrips();
@@ -143,6 +124,26 @@ public:
             measurements = Utils::generateMeasurements(100,totalDistance);
             times = Utils::generateTimes(100);
         } //else{}
+
+        //time step
+        double h = 0.1;
+
+        MatrixXd A{{1, h, 0.5 * (h * h)}, {0, 1, h}, {0, 0, 1}};
+        Matrix<double,1,3> C {{1,0,0}};
+
+        MatrixXd P0; P0.resize(3,3); P0 = MatrixXd::Identity(3,3);
+        Matrix<double,1,1> R {{5}};
+        Matrix<double,3,1> x0 {{0},{0},{0}};
+        Matrix<double,3,3> Q {{0.1, 0, 0},
+                       {0, 0.1, 0},
+                       {0, 0, 0.01}};
+
+        MatrixXd inputMeasurements, outputMeasurements;
+        //Since we are only dealing with distances
+        inputMeasurements.resize(3,1);
+        outputMeasurements.resize(3,1);
+        outputMeasurements.setZero();
+        inputMeasurements.setZero();
 
         unsigned int maxSamples = measurements.rows();
 
@@ -172,39 +173,37 @@ public:
 
 
         //Kalmann Filter Loop
-        for (int i = 0; i < 15; i++) {
-            //kf.printMatrices();
-            outputMeasurements.setZero();
-            outputMeasurements(0,0) = measurements(i,0);
-            kf.predictEstimate(inputMeasurements);
-            inputMeasurements = kf.updateEstimate(outputMeasurements).eval(); // Ensures a correct assignment
+        for (int i = 0; i < maxSamples-1; i++) {
+            try {
+                // Predict step
+                kf.predictEstimate(MatrixXd::Zero(3,1)); // No control input
 
-            double travelledDistance = inputMeasurements(0,0);
-            /*
-            std::cout << "Measurements: " << std::endl;
+                // Update step with measurement
+                outputMeasurements(0,0) = measurements(i,0);
+                MatrixXd state = kf.updateEstimate(outputMeasurements);
 
-            for (unsigned int i = 0; i < inputMeasurements.rows(); i++) {
-                std::cout << "row: " << i << "[";
-                for (unsigned int j = 0; j < inputMeasurements.cols(); j++) {
-                    std::cout << inputMeasurements(i,j) << ",";
+                // Get current estimates
+                double distance = state(0,0);
+                double velocity = state(1,0);
+                double acceleration = state(2,0);
+
+                // Sanity checks
+                velocity = std::max(0.0, std::min(velocity, 30.0)); // Constrain to 0-30 m/s (108 km/h)
+
+                // Calculate ETA (only if we've moved and have reasonable velocity)
+                if (distance > 10 && velocity > 0.1) {
+                    double ETA = (totalDistance - distance) / velocity;
+                    std::cout << "ETA: " << ETA
+                              << " Travelled: " << distance
+                              << " Velocity: " << velocity << std::endl;
                 }
-                std::cout << "]\n";
+            } catch (const std::exception& e) {
+                std::cerr << "Error at iteration " << i << ": " << e.what() << std::endl;
+                break;
             }
-
-*/
-
-            //std::cout << "Received: " << outputMeasurements(0,0) << '\n';
-            //std::cout << "Travelled: " << travelledDistance << '\n';
-            //auto now = high_resolution_clock::now();
-            //auto duration = duration_cast<microseconds>(now - start).count() /1e6;
-            double ETA;
-            if (dataChoice == 1) {
-                ETA = (totalDistance - travelledDistance) / times[i];
-            }//else if (dataChoice == 2) ETA = (totalDistance - travelledDistance) / duration;
-
-            std::cout << "ETA for bus " + std::to_string(bus_line) + ":" + std::to_string(ETA) + "\n";
-            std::cout << "Travelled distance: " << travelledDistance << "\n";
         }
+
+        kf.finalize();
 
     }
 
