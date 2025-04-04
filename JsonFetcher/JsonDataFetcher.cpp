@@ -81,7 +81,7 @@ void fetchAndStorePeriodically(const std::string& url, const std::string& output
 int main() {
     const std::string url = "https://broker.fiware.urbanplatform.portodigital.pt/v2/entities?q=vehicleType==bus&limit=1000";
     const std::string outputFilePath = "../Dataset/Porto/bus_data.json";
-    const int intervalSeconds = 30; // Fetch every 30 seconds
+    const int intervalSeconds = 180; // Fetch every 30 seconds
 
     fetchAndStorePeriodically(url, outputFilePath, intervalSeconds);
     return 0;

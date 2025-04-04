@@ -4,8 +4,9 @@ project(KalmannFilter)
 # Set the C++ standard to C++14
 set(CMAKE_CXX_STANDARD 14)
 
-# Find Eigen3 package
+# Find required packages
 find_package(Eigen3 REQUIRED)
+find_package(CURL REQUIRED)  # Add this for JsonDataFetcher
 
 # Add JsonFetcher directories (for common includes in the project)
 include_directories(${CMAKE_SOURCE_DIR}/src)
@@ -14,7 +15,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/GTFS)
 # Include Eigen headers
 include_directories(${EIGEN3_INCLUDE_DIRS})
 
-# Define the main source files
+# Main KalmannFilter executable
 add_executable(KalmannFilter
         ${CMAKE_SOURCE_DIR}/src/Application.cpp
         ${CMAKE_SOURCE_DIR}/src/main.cpp
@@ -30,3 +31,11 @@ add_executable(KalmannFilter
         src/KalmannFilter.h
         src/KalmannFilter.cpp
 )
+
+# JsonDataFetcher executable
+add_executable(JsonDataFetcher
+        ${CMAKE_SOURCE_DIR}/JsonFetcher/JsonDataFetcher.cpp
+)
+
+# Link libraries
+target_link_libraries(JsonDataFetcher PRIVATE ${CURL_LIBRARIES})

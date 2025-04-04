@@ -129,6 +129,43 @@ KalmannFilter/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/build
 .PHONY : KalmannFilter/fast
 
+#=============================================================================
+# Target rules for targets named JsonDataFetcher
+
+# Build rule for target.
+JsonDataFetcher: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 JsonDataFetcher
+.PHONY : JsonDataFetcher
+
+# fast build rule for target.
+JsonDataFetcher/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JsonDataFetcher.dir/build.make CMakeFiles/JsonDataFetcher.dir/build
+.PHONY : JsonDataFetcher/fast
+
+JsonFetcher/JsonDataFetcher.o: JsonFetcher/JsonDataFetcher.cpp.o
+.PHONY : JsonFetcher/JsonDataFetcher.o
+
+# target to build an object file
+JsonFetcher/JsonDataFetcher.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JsonDataFetcher.dir/build.make CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.o
+.PHONY : JsonFetcher/JsonDataFetcher.cpp.o
+
+JsonFetcher/JsonDataFetcher.i: JsonFetcher/JsonDataFetcher.cpp.i
+.PHONY : JsonFetcher/JsonDataFetcher.i
+
+# target to preprocess a source file
+JsonFetcher/JsonDataFetcher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JsonDataFetcher.dir/build.make CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.i
+.PHONY : JsonFetcher/JsonDataFetcher.cpp.i
+
+JsonFetcher/JsonDataFetcher.s: JsonFetcher/JsonDataFetcher.cpp.s
+.PHONY : JsonFetcher/JsonDataFetcher.s
+
+# target to generate assembly for a file
+JsonFetcher/JsonDataFetcher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JsonDataFetcher.dir/build.make CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.s
+.PHONY : JsonFetcher/JsonDataFetcher.cpp.s
+
 src/Application.o: src/Application.cpp.o
 .PHONY : src/Application.o
 
@@ -209,7 +246,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... JsonDataFetcher"
 	@echo "... KalmannFilter"
+	@echo "... JsonFetcher/JsonDataFetcher.o"
+	@echo "... JsonFetcher/JsonDataFetcher.i"
+	@echo "... JsonFetcher/JsonDataFetcher.s"
 	@echo "... src/Application.o"
 	@echo "... src/Application.i"
 	@echo "... src/Application.s"

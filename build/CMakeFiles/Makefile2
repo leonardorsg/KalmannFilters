@@ -64,6 +64,7 @@ CMAKE_BINARY_DIR = /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilt
 
 # The main recursive "all" target.
 all: CMakeFiles/KalmannFilter.dir/all
+all: CMakeFiles/JsonDataFetcher.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -72,6 +73,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/KalmannFilter.dir/clean
+clean: CMakeFiles/JsonDataFetcher.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -81,7 +83,7 @@ clean: CMakeFiles/KalmannFilter.dir/clean
 CMakeFiles/KalmannFilter.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/build/CMakeFiles --progress-num=1,2,3,4 "Built target KalmannFilter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/build/CMakeFiles --progress-num=3,4,5,6 "Built target KalmannFilter"
 .PHONY : CMakeFiles/KalmannFilter.dir/all
 
 # Build rule for subdir invocation for target.
@@ -99,6 +101,32 @@ KalmannFilter: CMakeFiles/KalmannFilter.dir/rule
 CMakeFiles/KalmannFilter.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/KalmannFilter.dir/build.make CMakeFiles/KalmannFilter.dir/clean
 .PHONY : CMakeFiles/KalmannFilter.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/JsonDataFetcher.dir
+
+# All Build rule for target.
+CMakeFiles/JsonDataFetcher.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JsonDataFetcher.dir/build.make CMakeFiles/JsonDataFetcher.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JsonDataFetcher.dir/build.make CMakeFiles/JsonDataFetcher.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/build/CMakeFiles --progress-num=1,2 "Built target JsonDataFetcher"
+.PHONY : CMakeFiles/JsonDataFetcher.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/JsonDataFetcher.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/JsonDataFetcher.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/build/CMakeFiles 0
+.PHONY : CMakeFiles/JsonDataFetcher.dir/rule
+
+# Convenience name for target.
+JsonDataFetcher: CMakeFiles/JsonDataFetcher.dir/rule
+.PHONY : JsonDataFetcher
+
+# clean rule for target.
+CMakeFiles/JsonDataFetcher.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/JsonDataFetcher.dir/build.make CMakeFiles/JsonDataFetcher.dir/clean
+.PHONY : CMakeFiles/JsonDataFetcher.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

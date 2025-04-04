@@ -152,6 +152,10 @@ class Parser {
             }
         }
 
+        void destroyVehicles() {
+            this->vehicles.clear();
+        }
+
 
         Parser(std::string agency_file, std::string calendar_file, std::string routes_file, std::string stops_times_file, std::string stops_file, std::string trips_file, std::string shapes_file) {
             this->agency_file = agency_file;
@@ -446,7 +450,7 @@ class Parser {
                     try {
                         vehicle.setRouteId(std::stoi(routeIdStr));
                     } catch (const std::invalid_argument &e) {
-                        std::cerr << "Invalid route ID: " << routeIdStr << std::endl;
+                        //std::cerr << "Invalid route ID: " << routeIdStr << std::endl;
                     } catch (const std::out_of_range &e) {
                         std::cerr << "Route ID out of range: " << routeIdStr << std::endl;
                     }
@@ -458,7 +462,7 @@ class Parser {
                     try {
                         vehicle.setTrip(std::stoi(tripStr));
                     } catch (const std::invalid_argument &e) {
-                        std::cerr << "Invalid trip number: " << tripStr << std::endl;
+                        //std::cerr << "Invalid trip number: " << tripStr << std::endl;
                     } catch (const std::out_of_range &e) {
                         std::cerr << "Trip number out of range: " << tripStr << std::endl;
                     }
