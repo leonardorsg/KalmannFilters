@@ -143,6 +143,40 @@ class Utils {
         return measurements;
     }
 
+    static double calculateBusDistance(const std::map<std::string,std::vector<Coordinates>>& tripShape,
+                                  const std::string& shape_id,
+                                  const Coordinates& stop_coordinates) {
+        try {
+            double bus_distance = 0;
+            double distance = 0;
+            double shortest_distance = 500000;
+            auto shape_it = tripShape.find(shape_id);
+            if (shape_it == tripShape.end()) {
+                throw std::runtime_error("Shape ID not found");
+            }
+
+            const auto& coordinates = shape_it->second;
+            if (coordinates.empty()) {
+                throw std::runtime_error("No coordinates for shape");
+            }
+
+            for (size_t i = 1; i < coordinates.size(); i++) {
+                bus_distance += vincentyFormula(coordinates[i - 1], coordinates[i]);
+                distance = vincentyFormula(coordinates[i], stop_coordinates);
+                if (distance < shortest_distance) { shortest_distance = distance; }
+                //Calculates distance up until 200m of the bus stop
+                if (distance < 200) return bus_distance;
+            }
+
+            std::ostringstream error_msg;
+            error_msg << "Stop not found within 200m of route, shortest calculated distance = " << shortest_distance;
+            throw std::runtime_error(error_msg.str());
+        } catch (const std::exception& e) {
+            std::cerr << "Error in calculateBusDistance: " << e.what() << std::endl;
+            return -1.0;
+        }
+    }
+
     // Calculate total distance for each trip
     static std::map<std::string, double> calculateTripDistances(const std::map<std::string, std::vector<Coordinates>> &trips) {
         std::map<std::string, double> tripDistances;

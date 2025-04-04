@@ -8,7 +8,7 @@
 
 class Trips {
     private:
-        int trip_id;
+        std::string trip_id;
         std::string route_id;
         int direction_id;
         std::string service_id;
@@ -17,9 +17,9 @@ class Trips {
 
 
     public:
-        Trips() : trip_id(0), route_id(""), direction_id(0), service_id(""), trip_headsign(""), shape_id("") {}
+        Trips() : trip_id(""), route_id(""), direction_id(0), service_id(""), trip_headsign(""), shape_id("") {}
 
-        Trips(int trip_id, std::string route_id, int direction_id, std::string service_id, std::string trip_headsign, std::string shape_id) {
+        Trips(std::string trip_id, std::string route_id, int direction_id, std::string service_id, std::string trip_headsign, std::string shape_id) {
             this->trip_id = trip_id;
             this->route_id = route_id;
             this->direction_id = direction_id;
@@ -28,8 +28,11 @@ class Trips {
             this->shape_id = shape_id;
         }
 
+        Trips(const Trips&) = default;  // Use default copy constructor
+        Trips& operator=(const Trips&) = default;  // Use default assignment operator
+
         //Getters
-        int getTripId() const { return trip_id; }
+        std::string getTripId() const { return trip_id; }
         std::string getRouteId() const { return route_id; }
         int getDirectionId() const { return direction_id; }
         std::string getServiceId() const { return service_id; }
@@ -37,7 +40,7 @@ class Trips {
         std::string getShapeId() const { return shape_id; }
 
         //Setters
-        void setTripId(int trip_id) { this->trip_id = trip_id; }
+        void setTripId(std::string trip_id) { this->trip_id = trip_id; }
         void setRouteId(const std::string &route_id) { this->route_id = route_id; }
         void setDirectionId(int direction_id) { this->direction_id = direction_id; }
         void setServiceId(const std::string &service_id) { this->service_id = service_id; }
@@ -45,7 +48,7 @@ class Trips {
         void setShapeId(const std::string &shape_id) {this->shape_id = shape_id; }
 
         std::string toString() {
-            return "Trip ID: " + std::to_string(trip_id) + "\n" +
+            return "Trip ID: " + trip_id + "\n" +
                    "Route ID: " + route_id + "\n" +
                    "Direction ID: " + std::to_string(direction_id) + "\n" +
                    "Service ID: " + service_id + "\n" +

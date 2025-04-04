@@ -42,7 +42,7 @@ class Parser {
         std::vector<Vehicle> vehicles;
         std::unordered_map<int, Route> routeHashTable; // Key: route_id, Value: Route object
         std::unordered_map<std::string, Stops> stopsHashTable; // Key: stop_id, Value: Stops object
-        std::unordered_map<int, Trips> tripsHashTable; // Key: trip_id, Value: Trips object
+        std::unordered_map<std::string, Trips> tripsHashTable; // Key: trip_id, Value: Trips object
         std::map<std::string, std::vector<Coordinates>> shapes; //to calculate the shapes.txt
 
 
@@ -95,16 +95,35 @@ class Parser {
             }
         }
 
-        // Methods for Trips hash table
-        void insertTrip(int trip_id, const Trips &trip) {
-            tripsHashTable[trip_id] = trip;
+    void insertTrip(const std::string& trip_id, const Trips &trip) {
+            // Validate trip_id isn't empty
+            if (trip_id.empty()) {
+                throw std::invalid_argument("Trip ID cannot be empty");
+            }
+
+            // Validate the trip object has valid data
+            if (trip.getTripId().empty()) {
+                throw std::invalid_argument("Trip object has empty trip_id");
+            }
+
+            // Make a copy with validated strings
+            Trips safe_copy(
+                trip.getTripId().empty() ? "" : trip.getTripId(),
+                trip.getRouteId().empty() ? "" : trip.getRouteId(),
+                trip.getDirectionId(),
+                trip.getServiceId().empty() ? "" : trip.getServiceId(),
+                trip.getTripHeadsign().empty() ? "" : trip.getTripHeadsign(),
+                trip.getShapeId().empty() ? "" : trip.getShapeId()
+            );
+
+            tripsHashTable[trip_id] = safe_copy;
         }
 
-        void deleteTrip(int trip_id) {
+        void deleteTrip(const std::string& trip_id) {
             tripsHashTable.erase(trip_id);
         }
 
-        Trips *lookupTrip(int trip_id) {
+        Trips *lookupTrip(std::string trip_id) {
             auto it = tripsHashTable.find(trip_id);
             if (it != tripsHashTable.end()) {
                 return &it->second;
@@ -114,7 +133,7 @@ class Parser {
 
         void printAllTrips() {
             for (auto &[key, trip]: tripsHashTable) {
-                trip.toString();
+                std::cout << trip.toString();
             }
         }
 
@@ -348,30 +367,52 @@ class Parser {
                 std::cout << "Error opening file" << std::endl;
                 return -1;
             }
-            auto stringToLower = [&](std::string& label){for (char& c : label) c = (char)tolower(c);};
+            auto stringToLower = [&](std::string& label) {
+                if (!label.empty()) {  // Check if string is not empty
+                    for (char& c : label) c = (char)tolower(c);
+                }
+            };
             std::string line;
             std::getline(file, line);
             stringToLower(line);
             if (countHeaders(line) < 0) return -1;
 
             while (std::getline(file, line)) {
+                if (line.empty()) continue;
+
+                if (line.back() == '\r') {
+                    line.pop_back();
+                }
+
                 std::istringstream s(line);
-                std::string route_id,direction_id,service_id, trip_id,trip_headsign, unused, shape_id;
-                if (!(std::getline(s, route_id, ',') && std::getline(s, direction_id, ',') && std::getline(s, service_id, ',') &&
-                    std::getline(s, trip_id, ',') && std::getline(s, trip_headsign, ',') && std::getline(s, unused, ',') && std::getline(s, unused, ',') && std::getline(s, shape_id, '\r') )) {
-                    std::cerr << "Error parsing agency file" << std::endl;
-                    return -1;
+                std::string route_id,direction_id,service_id, trip_id,trip_headsign, unused, shape_id, wheelchair;
+                // Read all fields with proper error checking
+                if (!std::getline(s, route_id, ',') || route_id.empty() ||
+                    !std::getline(s, direction_id, ',') || direction_id.empty() ||
+                    !std::getline(s, service_id, ',') || service_id.empty() ||
+                    !std::getline(s, trip_id, ',') || trip_id.empty() ||
+                    !std::getline(s, trip_headsign, ',') ||
+                    !std::getline(s, unused, ',') ||  // wheelchair_accessible
+                    !std::getline(s, unused, ',') ||  // block_id
+                    !std::getline(s, shape_id)) {     // shape_id
+                    std::cerr << "Error parsing line: " << line << std::endl;
+                    continue; // Skip malformed line but continue with others
                     }
-                std::getline(s, unused); // Read everything after the timezone into unused
+
 
                 stringToLower(route_id);
                 stringToLower(service_id);
                 stringToLower(trip_headsign);
                 stringToLower(shape_id);
+                stringToLower(trip_id);
 
-                Trips trip(std::stoi(trip_id), route_id, std::stoi(direction_id), service_id, trip_headsign, shape_id);
-
-                insertTrip(std::stoi(trip_id), trip);
+                try {
+                    Trips trip(trip_id, route_id, std::stoi(direction_id), service_id, trip_headsign, shape_id);
+                    insertTrip(trip_id, trip);
+                } catch (const std::exception& e) {
+                    std::cerr << "Error creating trip from line: " << line << "\nError: " << e.what() << std::endl;
+                    continue;
+                }
 
             }
             file.close();
@@ -508,7 +549,7 @@ class Parser {
     std::vector<Vehicle> getVehicles () {return vehicles;}
     std::unordered_map<int, Route> getRoutes () {return routeHashTable;}
     std::unordered_map<std::string, Stops> getStops () {return stopsHashTable;}
-    std::unordered_map<int, Trips> getTrips () {return tripsHashTable;}
+    std::unordered_map<std::string, Trips> getTrips () {return tripsHashTable;}
 
     //Print Fields
 

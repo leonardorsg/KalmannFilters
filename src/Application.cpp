@@ -12,12 +12,20 @@ void Application::run(int processedKey) {
             std::cout << std::endl;
 
 
-            int bus_line;
+            std::string bus_line;
             std::cout << "Please enter the bus line: ";
             std::cin >> bus_line;
             std::cout << std::endl;
 
-            runKalmannFilter(bus_line, stop_id);
+            int direction;
+            std::cout << "0 - Outbound Travel\n";
+            std::cout << "1 - Outbound Travel\n";
+            std::cout << "Please enter the direction: ";
+
+            std::cin >> direction;
+            std::cout << std::endl;
+
+            runKalmannFilter(bus_line, stop_id, direction);
             break;
         }
         case 2:

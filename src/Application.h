@@ -69,6 +69,7 @@ public:
 
 
                     // Print vehicle details
+                    /*
                     for (const auto &vehicle : vehicles) {
                         std::cout << "Route: " << vehicle.getRouteId() << "\n";
                         std::cout << "Trip: " << vehicle.getTrip() << "\n";
@@ -77,6 +78,7 @@ public:
                         std::cout << "Location: (" << vehicle.getCoordinates().Latitude << ", " << vehicle.getCoordinates().Longitude << ")\n\n";
 
                     }
+                    */
 
                 } catch (const std::exception &e) {
                     std::cerr << "Error2: " << e.what() << '\n';
@@ -100,22 +102,55 @@ public:
 
     void clearScreen();
 
-    void runKalmannFilter(int bus_line, std::string stop_id) {
-        int dataChoice;
+    void runKalmannFilter(std::string bus_line, std::string stop_id, int direction) {
 
+        int dataChoice;
         std::cout << "Choose the type of data you want to use: " << std::endl;
         std::cout << "1. Virtual Data (Random)." << std::endl;
         std::cout << "2. GPS Measurements." << std::endl;
         std::cout << "Select: ";
         std::cin >> dataChoice;
 
-        std::map<std::string, std::vector<Coordinates>> tripShape = this->portoParser->getShapes();
-        auto tripDistances = Utils::calculateTripDistances(tripShape);
-        auto trips = this->portoParser->getTrips();
-        std::string shape_id = trips.at(bus_line).getShapeId();
-        double totalDistance = tripDistances.at(shape_id);
+        const auto& trips = this->portoParser->getTrips();
+        const auto& stops = this->portoParser->getStops();
+
+
+
+        std::string shape_id = "";
+        // Safe map access
+        if (!stops.count(stop_id)) {
+            throw std::runtime_error("Invalid stop ID");
+        }
+
+        for (auto trip : trips) {
+            if (trip.second.getRouteId() == bus_line && trip.second.getDirectionId() == direction) {
+                shape_id = trip.second.getShapeId();
+            }
+        }
+
+        if (shape_id == "") {
+            throw std::runtime_error("Invalid bus line or direction");
+        }
+
+
+        const auto& stop = stops.at(stop_id);
+
+        // Safe coordinate conversion
+        Coordinates stop_coordinates;
+        try {
+            stop_coordinates = {std::stod(stop.getStopLat()), std::stod(stop.getStopLon())};
+        } catch (...) {
+            throw std::runtime_error("Invalid stop coordinates");
+        }
+
+        //Calculate the distance between the beginning of the trip and the bus stop
+        double totalDistance = Utils::calculateBusDistance(this->portoParser->getShapes(), shape_id, stop_coordinates);
+        if (totalDistance < 0) {
+            throw std::runtime_error("Could not calculate route distance");
+        }
 
         std::cout << "Total Distance: " << totalDistance << '\n';
+
 
         MatrixXd measurements = MatrixXd::Zero(1,3);
         std::vector<double> times;
@@ -147,23 +182,6 @@ public:
 
         unsigned int maxSamples = measurements.rows();
 
-        /*
-        std::cout << "Measurements: " << std::endl;
-
-        for (unsigned int i = 0; i < measurements.rows(); i++) {
-            std::cout << "row: " << i << "[";
-            for (unsigned int j = 0; j < measurements.cols(); j++) {
-                std::cout << measurements(i,j) << ",";
-            }
-            std::cout << "]\n";
-        }
-
-        std::cout << "Times: " << std::endl;
-
-        for (auto time : times) {
-            std::cout << time << '\n';
-        }
-        */
         std::cout << "Max samples: " << maxSamples << std::endl;
 
         KalmannFilter kf(A,C,Q,R,P0,x0,maxSamples);
