@@ -15,7 +15,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -30,7 +31,8 @@
 					"name" : "KalmannFilter",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -38,8 +40,15 @@
 			[
 				{
 					"directoryIndex" : 0,
+					"id" : "JsonDataFetcher::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-JsonDataFetcher-Debug-86d4cac75cc6ce6670c4.json",
+					"name" : "JsonDataFetcher",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
 					"id" : "KalmannFilter::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-KalmannFilter-Debug-615a00fa26adfefaaf49.json",
+					"jsonFile" : "target-KalmannFilter-Debug-1f4ea50d8ad9c841268b.json",
 					"name" : "KalmannFilter",
 					"projectIndex" : 0
 				}

@@ -165,11 +165,12 @@ class Utils {
                 distance = vincentyFormula(coordinates[i], stop_coordinates);
                 if (distance < shortest_distance) { shortest_distance = distance; }
                 //Calculates distance up until 200m of the bus stop
-                if (distance < 200) return bus_distance;
+                //std::cout << "Distance: " << distance << std::endl;
             }
 
+            if (distance > 0) return distance;
             std::ostringstream error_msg;
-            error_msg << "Stop not found within 200m of route, shortest calculated distance = " << shortest_distance;
+            error_msg << "Stop not found within route " << shortest_distance;
             throw std::runtime_error(error_msg.str());
         } catch (const std::exception& e) {
             std::cerr << "Error in calculateBusDistance: " << e.what() << std::endl;

@@ -1,3 +1,4 @@
 /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/cmake-build-debug/CMakeFiles/KalmannFilter.dir
+/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/cmake-build-debug/CMakeFiles/JsonDataFetcher.dir
 /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/cmake-build-debug/CMakeFiles/rebuild_cache.dir

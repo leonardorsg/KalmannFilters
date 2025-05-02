@@ -156,6 +156,28 @@ class Parser {
             this->vehicles.clear();
         }
 
+    void saveVehiclesToFile(const std::string& filename) {
+            std::ofstream outFile(filename);
+            if (!outFile.is_open()) {
+                throw std::runtime_error("Failed to open file for writing: " + filename);
+            }
+
+            // Write header
+            outFile << "RouteID,Direction,Trip,AgencyID,Latitude,Longitude\n";
+
+            // Write each vehicle's data
+            for (const auto& vehicle : vehicles) {
+                outFile << vehicle.getRouteId() << ","
+                        << vehicle.getDirection() << ","
+                        << vehicle.getTrip() << ","
+                        << vehicle.getAgencyId() << ","
+                        << vehicle.getCoordinates().Latitude << ","
+                        << vehicle.getCoordinates().Longitude << "\n";
+            }
+
+            outFile.close();
+        }
+
 
         Parser(std::string agency_file, std::string calendar_file, std::string routes_file, std::string stops_times_file, std::string stops_file, std::string trips_file, std::string shapes_file) {
             this->agency_file = agency_file;
@@ -444,9 +466,9 @@ class Parser {
             std::string annotationStr = annotation.get<std::string>();
 
             if (annotationStr.find("stcp%3Aroute%3A") != std::string::npos) {
-                size_t pos = annotationStr.find_last_of("%3A");
+                size_t pos = annotationStr.rfind("%3A");
                 if (pos != std::string::npos) {
-                    std::string routeIdStr = annotationStr.substr(pos + 1);
+                    std::string routeIdStr = annotationStr.substr(pos + 3);
                     try {
                         vehicle.setRouteId(std::stoi(routeIdStr));
                     } catch (const std::invalid_argument &e) {

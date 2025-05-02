@@ -129,6 +129,11 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
         std::cout << "Select: ";
         std::cin >> dataChoice;
 
+        // Take out the letter M, in cases of bus line 2M, 3M etc..
+        if (!bus_line.empty() && (bus_line.back() == 'm' || bus_line.back() == 'M') ) {
+            bus_line.pop_back();
+        }
+
         const auto& trips = this->portoParser->getTrips();
         const auto& stops = this->portoParser->getStops();
         const auto& shapes = this->portoParser->getShapes();
@@ -251,7 +256,10 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
             while (true) {
                 //Refresh GPS data
                 try {
-                    this->portoParser->parseVehicles(std::string(JSON_FILE_PATH));                }
+                    this->portoParser->parseVehicles(std::string(JSON_FILE_PATH));
+                    std::string vehicleDataFile = "vehicle_data.txt";
+                    this->portoParser->saveVehiclesToFile(vehicleDataFile);
+                }
                 catch (const std::exception &e) {
                     std::cerr << "Error updating vehicle data: " << e.what() << std::endl;
                     std::this_thread::sleep_for(std::chrono::seconds(30));
@@ -292,6 +300,7 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
                             std::cout << "Filtered Position: " << distance << "m from start\n";
                             std::cout << "Estimated Velocity: " << velocity << " m/s\n";
                             std::cout << "ETA: " << ETA << " seconds (" << ETA/60 << " minutes)\n";
+                            if (ETA < 0) { goto END;
                             break;
                         } catch (std::exception &e) {
                             std::cerr << "Error updating vehicle data: " << e.what() << std::endl;
@@ -303,11 +312,38 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
                     std::cout << "Bus not found in current data. Retrying..." << std::endl;
                 }
                 this->portoParser->destroyVehicles();
-                std::this_thread::sleep_for(std::chrono::seconds(180));
+                std::this_thread::sleep_for(std::chrono::seconds(30));
             }
         }
+    END:
+    std::cout << "Your bus has arrived!\n";
+    std::string a;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, a);
+    clearScreen();
+    std::cout << "\n\nWhat would you like to do next:\n"
+              << "1 - Return to main menu.\n"
+              << "2 - Exit " << "\n";
 
+    std::string opt;
+    std::cout << "Input: ";
+    std::cin >> opt;
+    std::cout << "\n";
 
+    int processedKey = processKey(opt);
+
+    switch (processedKey) {
+        case 1:
+            showMainMenu();
+        case 2:
+            std::cout << "Thank you very much and Bye-Bye.\n";
+            delay(4);
+            break;
+        default:
+            std::cout << "\n* Error while parsing option, please input a valid numeric option. *\n";
+            showMainMenu();
+    }
 
     }
 
