@@ -23,7 +23,10 @@
 #include "GTFS/trips.h"
 #include "RealTime/vehicle.h"
 
-
+/**
+ * @class Parser
+ * @brief Parses GTFS CSV files and provides access to agencies, calendars, routes, stops, trips, and shapes.
+ */
 class Parser {
     private:
         bool parsed = false;
@@ -49,7 +52,6 @@ class Parser {
 
     public:
 
-           // Methods for Route hash table
         void insertRoute(int route_id, const Route &route) {
             routeHashTable[route_id] = route;
         }
@@ -178,8 +180,17 @@ class Parser {
             outFile.close();
         }
 
-
-        Parser(std::string agency_file, std::string calendar_file, std::string routes_file, std::string stops_times_file, std::string stops_file, std::string trips_file, std::string shapes_file) {
+    /**
+ * @brief Constructs a Parser with file paths for all GTFS CSVs.
+ * @param agency_file Path to agency.txt
+ * @param calendar_file Path to calendar.txt
+ * @param routes_file Path to routes.txt
+ * @param stop_times_file Path to stop_times.txt
+ * @param stops_file Path to stops.txt
+ * @param trips_file Path to trips.txt
+ * @param shapes_file Path to shapes.txt
+ */
+    Parser(std::string agency_file, std::string calendar_file, std::string routes_file, std::string stops_times_file, std::string stops_file, std::string trips_file, std::string shapes_file) {
             this->agency_file = agency_file;
             this->calendar_file = calendar_file;
             this->routes_file = routes_file;
@@ -214,6 +225,10 @@ class Parser {
             return count;
         }
 
+    /**
+     * @brief Parses the agency CSV and populates agencyList.
+     * @return 0 on success, -1 on failure.
+     */
     int parseAgency() {
             std::ifstream file(agency_file);
             if (!file.is_open()) {
@@ -250,6 +265,11 @@ class Parser {
             return 0;
 
         }
+
+    /**
+     * @brief Parses the calendar CSV and populates calendarList.
+     * @return 0 on success, -1 on failure.
+     */
     int parseCalendar() {
             std::ifstream file(calendar_file);
             if (!file.is_open()) {
@@ -281,6 +301,16 @@ class Parser {
             file.close();
             return 0;
         }
+
+    /**
+     * @brief Parses the routes from a CSV file and stores them.
+     *
+     * This function reads the routes file, processes each route line by line,
+     * converts the strings to lowercase, and inserts the parsed route information
+     * into the route hash table. The function returns 0 on success or -1 on failure.
+     *
+     * @return int Returns 0 if the parsing is successful, -1 if an error occurs.
+     */
     int parseRoutes() {
             std::ifstream file(routes_file);
             if (!file.is_open()) {
@@ -314,6 +344,16 @@ class Parser {
             file.close();
             return 0;
         }
+
+    /**
+     * @brief Parses the stops from a CSV file and stores them.
+     *
+     * This function reads the stops file, processes each stop line by line,
+     * converts the strings to lowercase, and inserts the parsed stop information
+     * into the stops hash table. The function returns 0 on success or -1 on failure.
+     *
+     * @return int Returns 0 if the parsing is successful, -1 if an error occurs.
+     */
     int parseStops() {
             std::ifstream file(stops_file);
             if (!file.is_open()) {
@@ -350,6 +390,16 @@ class Parser {
             file.close();
             return 0;
         }
+
+    /**
+     * @brief Parses the stops times from a CSV file and stores them.
+     *
+     * This function reads the stops times file, processes each stop time line by line,
+     * converts the strings to lowercase, associates the parsed stop times with the stops,
+     * and adds them to the stop's time list. The function returns 0 on success or -1 on failure.
+     *
+     * @return int Returns 0 if the parsing is successful, -1 if an error occurs.
+     */
     int parseStopsTimes() {
             std::ifstream file(stops_times_file);
             if (!file.is_open()) {
@@ -387,6 +437,16 @@ class Parser {
 
 
         }
+
+    /**
+     * @brief Parses the trips from a CSV file and stores them.
+     *
+     * This function reads the trips file, processes each trip line by line,
+     * converts the strings to lowercase, creates trip objects, and inserts them
+     * into the trips hash table. The function returns 0 on success or -1 on failure.
+     *
+     * @return int Returns 0 if the parsing is successful, -1 if an error occurs.
+     */
     int parseTrips() {
             std::ifstream file(trips_file);
             if (!file.is_open()) {
@@ -446,7 +506,14 @@ class Parser {
         }
 
 
-
+    /**
+     * @brief Parses the vehicles from a JSON file and stores them.
+     *
+     * This function reads the JSON file, processes each vehicle entry, extracts relevant
+     * information (annotations, agency, location), and stores it in the vehicle list.
+     *
+     * @param jsonFile The path to the JSON file to be parsed.
+     */
     void parseVehicles(const std::string &jsonFile) {
     std::ifstream file(jsonFile);
     if (!file) {
@@ -522,7 +589,15 @@ class Parser {
     }
 }
 
-    // Read CSV and group coordinates by shape_id
+
+    /**
+     * @brief Parses the shapes from a CSV file and stores them in a map.
+     *
+     * This function reads the shapes file, processes each line, and stores the shape's
+     * coordinates grouped by the shape_id in a map.
+     *
+     * @return int Returns 0 if the parsing is successful, -1 if an error occurs.
+     */
     int parseShapes() {
             std::ifstream file(this->shapes_file);
             std::string line, shape_id;
@@ -545,6 +620,16 @@ class Parser {
             }
             return 0;
         }
+
+    /**
+     * @brief Runs all the parsing functions and validates the data files.
+     *
+     * This function sequentially calls all the parse functions for agency, calendar,
+     * routes, stops, stops times, trips, and shapes. It returns an error message if
+     * any of the files are invalid, or "Success" if all files are parsed correctly.
+     *
+     * @return std::string Returns a message indicating the result of the parsing process.
+     */
 
     std::string run() {
         if (parseAgency() < 0) return "Agency file is invalid";

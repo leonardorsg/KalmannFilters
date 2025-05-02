@@ -1,0 +1,7 @@
+<map id="Parser::parseStops" name="Parser::parseStops">
+<area shape="rect" id="Node000001" title="Parses the stops from a CSV file and stores them." alt="" coords="5,31,148,56"/>
+<area shape="rect" id="Node000002" href="$classParser.html#ad48a13d934425e7083d9c16d5d5afbb4" title="Helper function for data parsing." alt="" coords="196,5,356,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,32,182,27,183,33,149,37"/>
+<area shape="rect" id="Node000003" href="$classParser.html#a1f0c93b5bddb7fe651637295439b1a1c" title=" " alt="" coords="208,55,344,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,49,195,55,194,60,148,55"/>
+</map>

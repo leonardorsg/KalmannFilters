@@ -1,0 +1,7 @@
+<map id="KalmannFilter::updateEstimate" name="KalmannFilter::updateEstimate">
+<area shape="rect" id="Node000001" title="Performs the update step of the Kalman Filter." alt="" coords="440,5,664,31"/>
+<area shape="rect" id="Node000002" href="$classApplication.html#a9f056c74bafb80d4fb11cca17f577b00" title="Runs the Kalman filter process for a specific bus line and stop." alt="" coords="177,5,392,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="426,21,392,21,392,15,426,15"/>
+<area shape="rect" id="Node000003" href="$classApplication.html#a27c58712d868d161ec1f407fcab72e24" title="Dispatches user actions based on menu input." alt="" coords="5,5,129,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="164,21,130,21,130,15,164,15"/>
+</map>

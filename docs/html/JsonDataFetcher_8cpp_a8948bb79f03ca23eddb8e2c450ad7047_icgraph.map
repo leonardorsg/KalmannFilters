@@ -1,0 +1,7 @@
+<map id="fetchJsonFromUrl" name="fetchJsonFromUrl">
+<area shape="rect" id="Node000001" title="Fetches a JSON string from the specified URL using libcurl." alt="" coords="347,5,481,31"/>
+<area shape="rect" id="Node000002" href="$JsonDataFetcher_8cpp.html#af6ba9382a72faa0f03df9079155bcc0a" title="Periodically fetches JSON data from a URL and writes it to a file." alt="" coords="108,5,299,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="333,21,299,21,299,15,333,15"/>
+<area shape="rect" id="Node000003" href="$JsonDataFetcher_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point of the program. Starts periodic fetching of JSON data." alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+</map>

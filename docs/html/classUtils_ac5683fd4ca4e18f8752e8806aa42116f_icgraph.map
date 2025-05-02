@@ -1,0 +1,11 @@
+<map id="Utils::vincentyFormula" name="Utils::vincentyFormula">
+<area shape="rect" id="Node000001" title="Calculates the distance between two geographic coordinates using the Vincenty formula." alt="" coords="695,31,864,56"/>
+<area shape="rect" id="Node000002" href="$classUtils.html#a141782d3bcc91d477b704f89b398c921" title="Calculates the distance from a bus stop to a trip shape&#39;s coordinates." alt="" coords="443,5,643,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="681,35,643,31,644,26,681,30"/>
+<area shape="rect" id="Node000005" href="$classUtils.html#ae455a5ba2e50b08d248abbf489393ae5" title="Calculates the total distance for each trip in a set of trips." alt="" coords="440,55,647,80"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="681,56,647,59,647,54,681,51"/>
+<area shape="rect" id="Node000003" href="$classApplication.html#a9f056c74bafb80d4fb11cca17f577b00" title="Runs the Kalman filter process for a specific bus line and stop." alt="" coords="177,5,392,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="430,21,392,21,392,15,430,15"/>
+<area shape="rect" id="Node000004" href="$classApplication.html#a27c58712d868d161ec1f407fcab72e24" title="Dispatches user actions based on menu input." alt="" coords="5,5,129,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="164,21,130,21,130,15,164,15"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="Parser::insertTrip" name="Parser::insertTrip">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,129,136,155"/>
+<area shape="rect" id="Node000002" href="$classTrips.html#a71c1771c5c94c9f24b267bb90f1ad968" title=" " alt="" coords="191,5,343,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,127,123,85,151,61,183,40,196,33,198,38,185,44,154,65,126,89,85,131"/>
+<area shape="rect" id="Node000003" href="$classTrips.html#a1ba18d6c3245dcb1ca211aa050f39a17" title=" " alt="" coords="201,55,332,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="96,127,183,89,204,82,206,87,185,94,98,132"/>
+<area shape="rect" id="Node000004" href="$classTrips.html#a6d09f42e014ac93adc34f2af8a8c8adc" title=" " alt="" coords="196,104,337,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="136,131,182,125,183,130,137,136"/>
+<area shape="rect" id="Node000005" href="$classTrips.html#ade4581eae9e286da7233ede27f6aaccd" title=" " alt="" coords="200,153,333,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="137,147,187,154,186,159,136,153"/>
+<area shape="rect" id="Node000006" href="$classTrips.html#a9685c0fa293ab11cc6d77f90a1af9629" title=" " alt="" coords="184,203,349,228"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="101,152,185,188,210,196,208,201,183,192,99,157"/>
+<area shape="rect" id="Node000007" href="$classTrips.html#a0106655b0b43a2959dc5576422735ad6" title=" " alt="" coords="209,252,325,277"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="86,153,127,194,155,217,185,237,202,245,199,250,183,242,152,222,124,198,82,157"/>
+</map>

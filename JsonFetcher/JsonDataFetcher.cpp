@@ -6,18 +6,42 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 
+/**
+ * @file JsonDataFetcher.cpp
+ * @brief Periodically fetches JSON data from a URL and writes it to a file.
+ *
+ * This program uses libcurl to fetch data and nlohmann::json to parse it.
+ * It is intended to collect real-time vehicle data (e.g., bus positions).
+ *
+ * Compile with:
+ * g++ -std=c++14 -o JsonDataFetcher JsonDataFetcher.cpp -lcurl
+ */
+
 using json = nlohmann::json;
 
-//RUN COMMAND : g++ -std=c++14 -o JsonDataFetcher JsonDataFetcher.cpp -lcurl
+/**
+ * @brief Callback function for libcurl to write received data into a string.
+ *
+ * @param contents Pointer to the data received.
+ * @param size Size of a data unit.
+ * @param nmemb Number of data units.
+ * @param outString Pointer to the string where data will be appended.
+ * @return size_t Total number of bytes processed.
+ */
 
-// Function to handle data received by libcurl
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* outString) {
     size_t totalSize = size * nmemb;
     outString->append((char*)contents, totalSize);
     return totalSize;
 }
 
-// Function to fetch JSON from the URL
+/**
+ * @brief Fetches a JSON string from the specified URL using libcurl.
+ *
+ * @param url The URL to fetch JSON from.
+ * @return std::string The raw JSON response as a string.
+ */
+
 std::string fetchJsonFromUrl(const std::string& url) {
     CURL* curl;
     CURLcode res;
@@ -44,7 +68,14 @@ std::string fetchJsonFromUrl(const std::string& url) {
     return response;
 }
 
-// Main function to fetch, parse, and store JSON periodically
+/**
+ * @brief Periodically fetches JSON data from a URL and writes it to a file.
+ *
+ * @param url The URL to fetch data from.
+ * @param outputFilePath The file path to write the fetched JSON data to.
+ * @param intervalSeconds The interval in seconds between each fetch.
+ */
+
 void fetchAndStorePeriodically(const std::string& url, const std::string& outputFilePath, int intervalSeconds) {
     while (true) {
         std::cout << "Fetching data from URL..." << std::endl;
@@ -77,6 +108,12 @@ void fetchAndStorePeriodically(const std::string& url, const std::string& output
         std::this_thread::sleep_for(std::chrono::seconds(intervalSeconds));
     }
 }
+
+/**
+ * @brief Entry point of the program. Starts periodic fetching of JSON data.
+ *
+ * @return int Exit code.
+ */
 
 int main() {
     const std::string url = "https://broker.fiware.urbanplatform.portodigital.pt/v2/entities?q=vehicleType==bus&limit=1000";

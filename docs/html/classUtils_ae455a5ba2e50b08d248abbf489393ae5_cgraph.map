@@ -1,0 +1,5 @@
+<map id="Utils::calculateTripDistances" name="Utils::calculateTripDistances">
+<area shape="rect" id="Node000001" title="Calculates the total distance for each trip in a set of trips." alt="" coords="5,5,212,31"/>
+<area shape="rect" id="Node000002" href="$classUtils.html#ac5683fd4ca4e18f8752e8806aa42116f" title="Calculates the distance between two geographic coordinates using the Vincenty formula." alt="" coords="260,5,429,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,15,246,15,246,21,212,21"/>
+</map>

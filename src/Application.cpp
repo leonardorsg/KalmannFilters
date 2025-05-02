@@ -1,5 +1,13 @@
+/**
+* @file Application.cpp
+ * @brief Contains the implementation of the Application class which manages the Kalman filter execution and menu system.
+ */
 #include "Application.h"
 
+/**
+ * @brief Main dispatcher that handles user interaction based on menu options.
+ * @param processedKey The numeric option entered by the user.
+ */
 void Application::run(int processedKey) {
     L1:
     clearScreen();
@@ -119,6 +127,13 @@ void Application::showGoBackMenu(int functionNumber, const std::string& function
             goto L1;
     }
 }
+
+/**
+ * @brief Executes the Kalman Filter prediction and estimation for a specific bus line and stop.
+ * @param bus_line Bus line ID as string.
+ * @param stop_id Stop identifier.
+ * @param direction Travel direction (0 = outbound, 1 = inbound).
+ */
 
 void Application::runKalmannFilter(std::string bus_line, std::string stop_id, int direction) {
 

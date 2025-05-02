@@ -1,0 +1,5 @@
+<map id="Parser::parseCalendar" name="Parser::parseCalendar">
+<area shape="rect" id="Node000001" title="Parses the calendar CSV and populates calendarList." alt="" coords="5,5,169,31"/>
+<area shape="rect" id="Node000002" href="$classParser.html#ad48a13d934425e7083d9c16d5d5afbb4" title="Helper function for data parsing." alt="" coords="217,5,377,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,15,204,15,204,21,169,21"/>
+</map>

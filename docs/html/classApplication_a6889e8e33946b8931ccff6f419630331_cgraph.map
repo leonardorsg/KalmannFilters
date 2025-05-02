@@ -1,0 +1,5 @@
+<map id="Application::processKey" name="Application::processKey">
+<area shape="rect" id="Node000001" title="Parses a menu option string into an integer command." alt="" coords="5,5,183,31"/>
+<area shape="rect" id="Node000002" href="$classApplication.html#ad12666083e189dcf95c8b87bf59d95c2" title="Introduces a delay in milliseconds." alt="" coords="231,5,369,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,15,217,15,217,21,183,21"/>
+</map>

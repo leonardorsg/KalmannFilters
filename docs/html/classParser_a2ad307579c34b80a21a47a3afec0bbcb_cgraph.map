@@ -1,0 +1,45 @@
+<map id="Parser::run" name="Parser::run">
+<area shape="rect" id="Node000001" title="Runs all the parsing functions and validates the data files." alt="" coords="5,153,96,179"/>
+<area shape="rect" id="Node000002" href="$classParser.html#ae426b0c21d19c61aedf174c9eea8ddc4" title="Parses the agency CSV and populates agencyList." alt="" coords="158,104,313,129"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,151,143,138,172,130,174,135,145,143,97,156"/>
+<area shape="rect" id="Node000004" href="$classParser.html#a199858e77385be796074ba31ad2c4eed" title="Parses the calendar CSV and populates calendarList." alt="" coords="153,55,317,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="63,151,97,120,143,89,158,82,161,87,145,94,100,124,66,155"/>
+<area shape="rect" id="Node000005" href="$classParser.html#a0a655c2468f0d97e6fb44bf4b90a7819" title="Parses the routes from a CSV file and stores them." alt="" coords="160,5,311,31"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="56,152,87,98,112,66,142,40,152,34,155,39,146,44,116,70,91,101,60,155"/>
+<area shape="rect" id="Node000007" href="$classParser.html#ad9e1f69f77a22f6548e5bfd970d61cf8" title="Parses the shapes from a CSV file and stores them in a map." alt="" coords="159,252,312,277"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="66,177,100,207,145,237,164,245,162,250,143,242,97,211,63,181"/>
+<area shape="rect" id="Node000008" href="$classParser.html#a85642d8d5fca07302e50244127c24afd" title="Parses the stops from a CSV file and stores them." alt="" coords="164,153,307,179"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="96,163,150,163,150,169,96,169"/>
+<area shape="rect" id="Node000010" href="$classParser.html#a9e69834438be98031f2e40f64c4a9582" title="Parses the stops times from a CSV file and stores them." alt="" coords="144,301,327,327"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="60,178,92,231,116,261,146,287,158,294,155,298,142,291,112,265,88,234,56,180"/>
+<area shape="rect" id="Node000013" href="$classParser.html#a41d335799389c434f619c1fb48f6a536" title="Parses the trips from a CSV file and stores them." alt="" coords="167,203,303,228"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="97,175,175,197,174,202,95,181"/>
+<area shape="rect" id="Node000003" href="$classParser.html#ad48a13d934425e7083d9c16d5d5afbb4" title="Helper function for data parsing." alt="" coords="375,104,535,129"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="313,114,361,114,361,119,313,119"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="293,77,385,98,384,104,292,83"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="294,28,328,40,381,66,426,94,423,99,378,71,326,44,293,33"/>
+<area shape="rect" id="Node000006" href="$classParser.html#a3ef4420afca27ec4304155899a1f59dc" title=" " alt="" coords="382,5,527,31"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="311,15,368,15,368,21,311,21"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="292,151,384,130,385,135,293,156"/>
+<area shape="rect" id="Node000009" href="$classParser.html#a1f0c93b5bddb7fe651637295439b1a1c" title=" " alt="" coords="387,153,523,179"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="307,163,373,163,373,169,307,169"/>
+<area shape="rect" id="Node000011" href="$classStops.html#abea516784e6cdf2ce196076285961bef" title=" " alt="" coords="379,276,531,301"/>
+<area shape="poly" id="edge13_Node000010_Node000011" title=" " alt="" coords="326,301,365,296,365,302,327,306"/>
+<area shape="rect" id="Node000012" href="$classParser.html#ab94da21a8a4b8244afc3b03a2aca06c0" title=" " alt="" coords="383,325,526,351"/>
+<area shape="poly" id="edge14_Node000010_Node000012" title=" " alt="" coords="327,321,370,326,369,331,326,327"/>
+<area shape="poly" id="edge16_Node000013_Node000003" title=" " alt="" coords="297,200,325,188,340,176,349,164,358,151,373,138,385,132,388,137,376,143,362,155,353,167,344,180,328,192,300,205"/>
+<area shape="rect" id="Node000014" href="$classParser.html#a108d2d3dddf8d2bd40d93be8ccb62332" title=" " alt="" coords="389,203,520,228"/>
+<area shape="poly" id="edge17_Node000013_Node000014" title=" " alt="" coords="303,213,375,213,375,218,303,218"/>
+<area shape="rect" id="Node000015" href="$classTrips.html#a71c1771c5c94c9f24b267bb90f1ad968" title=" " alt="" coords="589,79,741,104"/>
+<area shape="poly" id="edge18_Node000014_Node000015" title=" " alt="" coords="511,200,533,188,549,170,556,152,564,132,581,113,589,108,592,112,584,117,569,135,561,154,553,173,536,192,513,205"/>
+<area shape="rect" id="Node000016" href="$classTrips.html#a1ba18d6c3245dcb1ca211aa050f39a17" title=" " alt="" coords="600,128,731,153"/>
+<area shape="poly" id="edge19_Node000014_Node000016" title=" " alt="" coords="499,200,534,188,582,162,601,155,603,160,584,167,536,192,501,205"/>
+<area shape="rect" id="Node000017" href="$classTrips.html#a6d09f42e014ac93adc34f2af8a8c8adc" title=" " alt="" coords="595,177,736,203"/>
+<area shape="poly" id="edge20_Node000014_Node000017" title=" " alt="" coords="520,205,580,198,581,203,520,210"/>
+<area shape="rect" id="Node000018" href="$classTrips.html#ade4581eae9e286da7233ede27f6aaccd" title=" " alt="" coords="599,227,732,252"/>
+<area shape="poly" id="edge21_Node000014_Node000018" title=" " alt="" coords="520,220,585,228,584,233,520,225"/>
+<area shape="rect" id="Node000019" href="$classTrips.html#a9685c0fa293ab11cc6d77f90a1af9629" title=" " alt="" coords="583,276,748,301"/>
+<area shape="poly" id="edge22_Node000014_Node000019" title=" " alt="" coords="489,226,584,261,609,269,607,274,582,266,487,231"/>
+<area shape="rect" id="Node000020" href="$classTrips.html#a0106655b0b43a2959dc5576422735ad6" title=" " alt="" coords="607,325,723,351"/>
+<area shape="poly" id="edge23_Node000014_Node000020" title=" " alt="" coords="482,226,536,261,560,287,569,299,584,310,598,318,596,323,581,315,566,303,556,291,533,265,479,230"/>
+</map>

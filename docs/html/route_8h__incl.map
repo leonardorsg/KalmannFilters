@@ -1,0 +1,5 @@
+<map id="route.h" name="route.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,73,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="10,79,69,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="42,31,42,65,37,65,37,31"/>
+</map>

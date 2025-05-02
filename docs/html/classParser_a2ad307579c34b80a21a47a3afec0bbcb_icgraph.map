@@ -1,0 +1,5 @@
+<map id="Parser::run" name="Parser::run">
+<area shape="rect" id="Node000001" title="Runs all the parsing functions and validates the data files." alt="" coords="229,5,320,31"/>
+<area shape="rect" id="Node000002" href="$classApplication.html#a8a0c6f6989c32876137e4a8b6022ee81" title="Constructs the Application object and initializes data parsing and user interaction." alt="" coords="5,5,181,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,21,182,21,182,15,216,15"/>
+</map>

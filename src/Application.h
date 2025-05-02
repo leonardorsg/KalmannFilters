@@ -1,6 +1,11 @@
 #ifndef APLICATION_H
 #define APLICATION_H
 
+/**
+ * @file Application.h
+ * @brief Declares the Application class which provides a user interface to run Kalman filtering on bus data.
+ */
+
 #include <fstream>
 #include <sstream>
 #include <thread>
@@ -24,9 +29,16 @@
 
 using namespace std::chrono;
 
-/**@brief Class that manages the menu.*/
+/**
+ * @class Application
+ * @brief Manages the lifecycle of the application, including parsing data, showing menus, and running the Kalman filter.
+ */
 class Application {
 public:
+    /**
+     * @brief Constructs the Application object and initializes data parsing and user interaction.
+     * @param env The operating system environment ("win" or "unix").
+     */
     Application(std::string env) {
         this->env = std::move(env);
         restartConstructor:
@@ -99,19 +111,50 @@ public:
         clearScreen();
         showMainMenu();
     }
-
+    /**
+     * @brief Clears the screen based on the OS.
+     */
     void clearScreen();
 
+    /**
+     * @brief Runs the Kalman filter process for a specific bus line and stop.
+     * @param bus_line The bus line identifier.
+     * @param stop_id The stop identifier.
+     * @param direction The direction of travel (0 for outbound, 1 for inbound).
+     */
     void runKalmannFilter(std::string bus_line, std::string stop_id, int direction);
 
+    /**
+     * @brief Dispatches user actions based on menu input.
+     * @param processedKey Numeric representation of the user menu choice.
+     */
     void run(int processedKey);
+
+    /**
+     * @brief Introduces a delay in milliseconds.
+     * @param sleepTime Time in milliseconds to pause.
+     */
     static void delay(long sleepTime);
+
+    /**
+     * @brief Parses a menu option string into an integer command.
+     * @param option The string input.
+     * @return Parsed integer command or -1 if invalid.
+     */
     static int processKey(const std::string &option);
 
 private:
 
-    /* Private functions */
+    /**
+     * @brief Shows the main menu.
+     */
     void showMainMenu();
+
+    /**
+     * @brief Shows a follow-up menu after an operation.
+     * @param option Function index.
+     * @param functionName Name of the function previously run.
+     */
     void showGoBackMenu(int option, const std::string& functionName);
     bool portoParsed = false;
     bool bostonParsed = false;

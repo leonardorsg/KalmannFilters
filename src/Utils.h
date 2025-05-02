@@ -5,6 +5,16 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+/**
+ * @file Utils.h
+ * @brief Utility class for geographic calculations, bus movement simulations, and measurement generation.
+ *
+ * This file contains a `Utils` class with methods for:
+ * - Calculating distances between geographic coordinates using the Vincenty formula.
+ * - Generating random times and bus movement data.
+ * - Calculating bus distances and trip distances.
+ */
+
 #include <Eigen/Dense>
 #include "KalmannFilter.h"
 #include <cmath>
@@ -21,20 +31,48 @@
 
 using namespace Eigen;
 
+/**
+ * @struct Coordinates
+ * @brief Structure representing geographic coordinates (latitude and longitude).
+ */
 struct Coordinates {
     double Latitude;
     double Longitude;
 };
-
+/**
+ * @def MAJOR_AXIS
+ * @brief Semi-major axis of the ellipsoid (in meters).
+ */
 #define MAJOR_AXIS 6348137.0
+/**
+ * @def FLATTENING
+ * @brief Flattening constant for the ellipsoid.
+ */
 #define FLATTENING 0.003352810665
+/**
+ * @def MINOR_AXIS
+ * @brief Semi-minor axis of the ellipsoid (in meters).
+ */
 #define MINOR_AXIS 6325852.899
 
+/**
+ * @class Utils
+ * @brief Utility class that provides various static methods for geographic calculations, bus movements, and data generation.
+ */
 class Utils {
     public:
     Utils(){};
 
-    //Function to calculate the distance between two coordinates
+    /**
+     * @brief Calculates the distance between two geographic coordinates using the Vincenty formula.
+     *
+     * The Vincenty formula calculates the geodesic distance between two points on an ellipsoid.
+     *
+     * @param coordinate1 The first coordinate.
+     * @param coordinate2 The second coordinate.
+     * @return The distance between the two coordinates in meters.
+     * @note Returns -1 if the formula fails to converge.
+     */
     static double vincentyFormula(Coordinates coordinate1, Coordinates coordinate2) {
         // Convert degrees to radians
         double lat1 = coordinate1.Latitude;
@@ -86,6 +124,14 @@ class Utils {
         return s; // Distance in meters
     }
 
+    /**
+     * @brief Calculates the total distance from a list of measurements.
+     *
+     * This method sums up all the distances in the list and returns the total.
+     *
+     * @param measurements A list of distance measurements.
+     * @return The total distance in the list.
+     */
     static double getTotalDistance(std::list<double> measurements) {
         double totalDistance = 0;
 
@@ -96,6 +142,14 @@ class Utils {
         return totalDistance;
     }
 
+    /**
+     * @brief Generates a list of random times.
+     *
+     * The method generates `num_values` random times between 0 and 3000, sorts them, and returns the sorted list.
+     *
+     * @param num_values The number of random values to generate.
+     * @return A vector containing the sorted random times.
+     */
     static std::vector<double> generateTimes(int num_values) {
         // Seed the random number generator
         std::srand(static_cast<unsigned>(std::time(0)));
@@ -115,6 +169,16 @@ class Utils {
         return values;
     }
 
+    /**
+     * @brief Generates a matrix of bus movement measurements.
+     *
+     * This method generates bus movement data based on a simple model, where the bus accelerates and decelerates.
+     * It also adds noise to the measurements to simulate realistic bus behavior.
+     *
+     * @param maxSamples The maximum number of samples to generate.
+     * @param totalDistance The total distance to cover during the simulation.
+     * @return A matrix containing the generated bus movement measurements.
+     */
     static MatrixXd generateMeasurements(unsigned int maxSamples, double totalDistance) {
         MatrixXd measurements(maxSamples, 3);
         measurements.setZero();
@@ -143,6 +207,17 @@ class Utils {
         return measurements;
     }
 
+    /**
+     * @brief Calculates the distance from a bus stop to a trip shape's coordinates.
+     *
+     * This method calculates the distance between a given bus stop's coordinates and the closest point on the bus trip's shape.
+     *
+     * @param tripShape A map of trip shapes, where each shape is associated with a list of coordinates.
+     * @param shape_id The identifier of the bus trip shape.
+     * @param stop_coordinates The coordinates of the bus stop.
+     * @return The distance to the bus stop from the trip's shape, in meters.
+     * @throws std::runtime_error if the shape ID is not found or the coordinates are invalid.
+     */
     static double calculateBusDistance(const std::map<std::string,std::vector<Coordinates>>& tripShape,
                                   const std::string& shape_id,
                                   const Coordinates& stop_coordinates) {
@@ -178,7 +253,14 @@ class Utils {
         }
     }
 
-    // Calculate total distance for each trip
+    /**
+     * @brief Calculates the total distance for each trip in a set of trips.
+     *
+     * This method computes the total distance for each trip by summing the distances between consecutive coordinates.
+     *
+     * @param trips A map of trips, where each trip is associated with a list of coordinates.
+     * @return A map of total distances for each trip.
+     */
     static std::map<std::string, double> calculateTripDistances(const std::map<std::string, std::vector<Coordinates>> &trips) {
         std::map<std::string, double> tripDistances;
 
@@ -193,7 +275,17 @@ class Utils {
         return tripDistances;
     }
 
+    /**
+     * @brief Placeholder method to convert data.
+     *
+     * This method is a placeholder for data conversion logic, which can be implemented as needed.
+     */
     static MatrixXd convertData();
+    /**
+     * @brief Placeholder method to output data.
+     *
+     * This method is a placeholder for logic to output data, which can be implemented as needed.
+     */
     static void outputData();
 };
 

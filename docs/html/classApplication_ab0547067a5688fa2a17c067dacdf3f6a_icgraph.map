@@ -1,0 +1,10 @@
+<map id="Application::clearScreen" name="Application::clearScreen">
+<area shape="rect" id="Node000001" title="Clears the screen based on the OS." alt="" coords="440,56,619,81"/>
+<area shape="rect" id="Node000002" href="$classApplication.html#a8a0c6f6989c32876137e4a8b6022ee81" title="Constructs the Application object and initializes data parsing and user interaction." alt="" coords="197,5,373,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="453,56,346,33,347,28,454,50"/>
+<area shape="rect" id="Node000003" href="$classApplication.html#a27c58712d868d161ec1f407fcab72e24" title="Dispatches user actions based on menu input." alt="" coords="5,81,129,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="426,77,130,93,129,88,426,72"/>
+<area shape="rect" id="Node000004" href="$classApplication.html#a9f056c74bafb80d4fb11cca17f577b00" title="Runs the Kalman filter process for a specific bus line and stop." alt="" coords="177,107,392,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="454,87,347,109,346,104,453,82"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="164,108,130,104,130,99,164,103"/>
+</map>

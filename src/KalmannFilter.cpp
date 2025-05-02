@@ -10,6 +10,21 @@ using namespace Eigen;
 
 //g++ -I/usr/include/eigen3 -o my_program my_program.cpp
 
+
+
+/**
+ * @brief Constructor for the KalmannFilter class.
+ *
+ * Initializes the Kalman Filter with provided parameters.
+ *
+ * @param A State transition matrix.
+ * @param C Observation matrix.
+ * @param Q Process noise covariance matrix.
+ * @param R Observation noise covariance matrix.
+ * @param P0 Initial state covariance matrix.
+ * @param x0 Initial state estimate.
+ * @param maxSamples Maximum number of samples.
+ */
 KalmannFilter::KalmannFilter(MatrixXd &A, MatrixXd C,
         MatrixXd Q, MatrixXd R, MatrixXd P0, MatrixXd x0, unsigned int maxSamples) {
     this->k = 0;    this->A = A;
@@ -41,7 +56,14 @@ KalmannFilter::KalmannFilter(MatrixXd &A, MatrixXd C,
 }
 
 
-//In the prediction stage, the algorithm predicts a state estimate and the error covariance
+/**
+ * @brief Performs the prediction step of the Kalman Filter.
+ *
+ * Predicts the next state and its covariance based on the current estimate.
+ *
+ * @param input Control input (if any).
+ * @throws std::runtime_error if input dimensions do not match the expected size.
+ */
 void KalmannFilter::predictEstimate(MatrixXd input) {
     if (input.rows() != n || input.cols() != 1) {
         throw std::runtime_error("Error: Input matrix dimensions do not match state dimension.");
@@ -55,9 +77,15 @@ void KalmannFilter::predictEstimate(MatrixXd input) {
 }
 
 
-/* When there is a new measurement for the predicted variables, the algorithm updates, the
- * state estimate, combining the measured values with the predicted state estimate.
- * Measurement = Z(k) (observation of the true state X(k)) - C(k) * estimatesApriori(k-1)
+
+/**
+ * @brief Performs the update step of the Kalman Filter.
+ *
+ * Updates the state estimate using the provided measurement.
+ *
+ * @param measurement The observed measurement vector.
+ * @return MatrixXd The updated state estimate.
+ * @throws std::runtime_error if dimensions are invalid or sample count exceeded.
  */
 MatrixXd KalmannFilter::updateEstimate(MatrixXd measurement) {
 
@@ -77,45 +105,11 @@ MatrixXd KalmannFilter::updateEstimate(MatrixXd measurement) {
 
 
     this->kalmannGain(all, seq((k-1)*r,k*r-1)) = this->covarianceApriori(all,seq((k-1)*n,k*n-1)) * (C.transpose()) * initialGain;
-    /*
-    std::cout << "KalmannGain: " << std::endl;
 
-
-    for (unsigned int i = 0; i < kalmannGain.rows(); i++) {
-        std::cout << "|";
-        for (unsigned int j = 0; j < kalmannGain.cols(); j++) {
-            std::cout << kalmannGain(i,j) << ",";
-        }
-        std::cout << "|\n";
-    }
-    */
     measurement = (measurement.transpose());
-    /*
-    std::cout << "measurement: " << std::endl;
 
-
-    for (unsigned int i = 0; i < measurement.rows(); i++) {
-        std::cout << "|";
-        for (unsigned int j = 0; j < measurement.cols(); j++) {
-            std::cout << measurement(i,j) << ",";
-        }
-        std::cout << "|\n";
-    }
-*/
     auto result = C * this->estimatesApriori.col(this->k-1);
-/*
-    std::cout <<"result: "<< std::endl;
-    for (unsigned int i = 0; i < result.rows(); i++) {
-        std::cout << "|";
-        for (unsigned int j = 0; j < result.cols(); j++) {
-            std::cout << result(i,j) << ",";
-        }
-        std::cout << "|\n";
-    }
-*/
 
-
-    //CHECAR ERRO AQUI
     this->errors.col(this->k-1) = measurement.col(0) - result.col(0);
 
     this->estimatesAposteriori.col(this->k) = this->estimatesApriori.col(this->k-1) + kalmannGain(all,seq((k-1)*r,k*r-1))*errors.col(k-1);
@@ -132,6 +126,10 @@ MatrixXd KalmannFilter::updateEstimate(MatrixXd measurement) {
     return this->estimatesAposteriori.col(k);
 }
 
+
+/**
+ * @brief Prints all internal matrices of the Kalman Filter for debugging purposes.
+ */
 void KalmannFilter::printMatrices() {
     cout << "State Variable (k): " << k << endl;
     cout << "Dimensions - m: " << m << ", n: " << n << ", r: " << r << endl;
@@ -151,6 +149,11 @@ void KalmannFilter::printMatrices() {
     cout << "\nMatrix errors (Prediction Errors):\n" << errors << endl;
 }
 
+/**
+ * @brief Resets all internal matrices and counters of the Kalman Filter.
+ *
+ * Can be used to clear the state and reuse the filter.
+ */
 void KalmannFilter::finalize() {
         // Ensure we don't have any pending operations
         this->k = 0;

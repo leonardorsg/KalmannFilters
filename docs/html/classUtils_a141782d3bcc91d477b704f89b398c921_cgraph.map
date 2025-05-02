@@ -1,0 +1,5 @@
+<map id="Utils::calculateBusDistance" name="Utils::calculateBusDistance">
+<area shape="rect" id="Node000001" title="Calculates the distance from a bus stop to a trip shape&#39;s coordinates." alt="" coords="5,5,205,31"/>
+<area shape="rect" id="Node000002" href="$classUtils.html#ac5683fd4ca4e18f8752e8806aa42116f" title="Calculates the distance between two geographic coordinates using the Vincenty formula." alt="" coords="253,5,423,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,15,239,15,239,21,206,21"/>
+</map>

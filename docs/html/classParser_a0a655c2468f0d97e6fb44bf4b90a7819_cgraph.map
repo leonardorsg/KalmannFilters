@@ -1,0 +1,7 @@
+<map id="Parser::parseRoutes" name="Parser::parseRoutes">
+<area shape="rect" id="Node000001" title="Parses the routes from a CSV file and stores them." alt="" coords="5,31,156,56"/>
+<area shape="rect" id="Node000002" href="$classParser.html#ad48a13d934425e7083d9c16d5d5afbb4" title="Helper function for data parsing." alt="" coords="204,5,364,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,31,190,27,191,32,156,37"/>
+<area shape="rect" id="Node000003" href="$classParser.html#a3ef4420afca27ec4304155899a1f59dc" title=" " alt="" coords="211,55,357,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,50,198,54,197,60,156,55"/>
+</map>

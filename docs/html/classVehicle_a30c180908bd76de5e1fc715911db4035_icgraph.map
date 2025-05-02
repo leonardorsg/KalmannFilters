@@ -1,0 +1,11 @@
+<map id="Vehicle::setCoordinates" name="Vehicle::setCoordinates">
+<area shape="rect" id="Node000001" title=" " alt="" coords="648,31,823,56"/>
+<area shape="rect" id="Node000002" href="$classParser.html#a9299ca8d76f019c784086f2fd8f2b3ce" title="Parses the vehicles from a JSON file and stores them." alt="" coords="440,31,600,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="634,46,600,46,600,41,634,41"/>
+<area shape="rect" id="Node000003" href="$classApplication.html#a8a0c6f6989c32876137e4a8b6022ee81" title="Constructs the Application object and initializes data parsing and user interaction." alt="" coords="197,5,373,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="426,36,372,30,373,25,427,31"/>
+<area shape="rect" id="Node000004" href="$classApplication.html#a9f056c74bafb80d4fb11cca17f577b00" title="Runs the Kalman filter process for a specific bus line and stop." alt="" coords="177,55,392,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="427,56,393,59,392,54,426,50"/>
+<area shape="rect" id="Node000005" href="$classApplication.html#a27c58712d868d161ec1f407fcab72e24" title="Dispatches user actions based on menu input." alt="" coords="5,55,129,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="164,70,130,70,130,65,164,65"/>
+</map>

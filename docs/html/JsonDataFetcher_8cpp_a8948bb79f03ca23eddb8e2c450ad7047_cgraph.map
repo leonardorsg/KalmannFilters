@@ -1,0 +1,5 @@
+<map id="fetchJsonFromUrl" name="fetchJsonFromUrl">
+<area shape="rect" id="Node000001" title="Fetches a JSON string from the specified URL using libcurl." alt="" coords="5,5,140,31"/>
+<area shape="rect" id="Node000002" href="$JsonDataFetcher_8cpp.html#a4dde9c8b8615d02ab80435b257964db7" title="Callback function for libcurl to write received data into a string." alt="" coords="188,5,301,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,15,174,15,174,21,140,21"/>
+</map>

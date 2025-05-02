@@ -1,0 +1,48 @@
+<map id="Application::runKalmannFilter" name="Application::runKalmannFilter">
+<area shape="rect" id="Node000001" title="Runs the Kalman filter process for a specific bus line and stop." alt="" coords="5,379,220,404"/>
+<area shape="rect" id="Node000002" href="$classUtils.html#a141782d3bcc91d477b704f89b398c921" title="Calculates the distance from a bus stop to a trip shape&#39;s coordinates." alt="" coords="280,5,480,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,378,124,316,149,225,169,174,195,125,227,79,266,40,273,35,276,39,270,44,231,83,200,128,174,177,154,226,129,318,118,379"/>
+<area shape="rect" id="Node000004" href="$classApplication.html#ab0547067a5688fa2a17c067dacdf3f6a" title="Clears the screen based on the OS." alt="" coords="291,55,469,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="114,378,129,326,158,250,178,209,203,168,232,130,266,97,290,83,293,87,270,101,236,134,207,171,183,211,163,252,134,328,119,379"/>
+<area shape="rect" id="Node000005" href="$classApplication.html#ad12666083e189dcf95c8b87bf59d95c2" title="Introduces a delay in milliseconds." alt="" coords="558,303,697,328"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="115,378,130,330,159,263,179,228,204,195,233,165,267,141,326,114,353,108,379,106,405,109,432,116,493,141,516,155,537,172,573,212,599,253,618,289,613,291,595,256,568,215,533,176,513,159,491,146,431,121,404,114,379,111,354,113,328,119,269,146,236,169,208,198,184,231,164,266,135,332,120,379"/>
+<area shape="rect" id="Node000006" href="$classParser.html#adcd1c3172cfb37c92513186554aa3bfb" title=" " alt="" coords="293,156,467,181"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="118,377,137,340,169,289,213,235,238,211,267,190,279,184,282,188,269,195,242,215,217,239,174,292,142,343,122,380"/>
+<area shape="rect" id="Node000007" href="$classKalmannFilter.html#adc98def473e1e130eb5e76a95fec7a49" title="Resets all internal matrices and counters of the Kalman Filter." alt="" coords="296,205,464,231"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="121,377,177,311,219,272,267,240,282,233,284,238,269,244,222,276,181,314,125,380"/>
+<area shape="rect" id="Node000008" href="$classUtils.html#a84e9518dcdf4e756fedac8f2be77a565" title="Generates a matrix of bus movement measurements." alt="" coords="273,255,487,280"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="128,376,187,333,226,309,267,289,288,281,290,286,269,294,228,314,190,338,131,381"/>
+<area shape="rect" id="Node000009" href="$classUtils.html#a9fa1d3a3d9ad3465aa348cc4fccc665c" title="Generates a list of random times." alt="" coords="301,304,459,329"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="148,376,267,338,301,330,302,335,269,343,150,381"/>
+<area shape="rect" id="Node000010" href="$classParser.html#a440d9e927fdacdd4c83f4936d0a94580" title=" " alt="" coords="311,353,449,379"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="220,379,297,371,297,376,220,384"/>
+<area shape="rect" id="Node000011" href="$classParser.html#ad304f79b39d03544d7e7666d2bc2a74c" title=" " alt="" coords="317,403,443,428"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="220,398,303,406,303,411,220,404"/>
+<area shape="rect" id="Node000012" href="$classParser.html#a8261eb783750cc66eed5411ac3e3bc37" title=" " alt="" coords="319,452,441,477"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="153,402,269,437,307,446,306,452,267,442,152,407"/>
+<area shape="rect" id="Node000013" href="$classParser.html#a1d799b3ee425dd40afa78b38237a3edd" title=" " alt="" coords="307,501,453,527"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="132,402,190,443,229,467,269,486,295,495,293,500,267,491,226,471,187,448,129,406"/>
+<area shape="rect" id="Node000014" href="$classParser.html#a9299ca8d76f019c784086f2fd8f2b3ce" title="Parses the vehicles from a JSON file and stores them." alt="" coords="300,649,460,675"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="121,404,138,449,168,512,212,578,239,609,270,634,289,645,286,650,266,639,235,612,208,582,163,514,133,451,116,405"/>
+<area shape="rect" id="Node000020" href="$classKalmannFilter.html#a38666fd55b6f3b85d3714ba58c2a0afc" title="Performs the prediction step of the Kalman Filter." alt="" coords="268,600,492,625"/>
+<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="123,403,142,440,174,490,217,542,242,565,269,585,283,593,281,597,267,590,239,569,213,545,170,493,138,443,118,406"/>
+<area shape="rect" id="Node000021" href="$classApplication.html#a6889e8e33946b8931ccff6f419630331" title="Parses a menu option string into an integer command." alt="" coords="291,551,469,576"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="126,403,182,467,223,504,269,536,287,544,285,549,267,540,219,509,178,471,122,406"/>
+<area shape="rect" id="Node000022" href="$classParser.html#a4303227a81bacb94660f3359313bc5c3" title=" " alt="" coords="284,699,476,724"/>
+<area shape="poly" id="edge22_Node000001_Node000022" title=" " alt="" coords="119,404,133,457,161,534,181,575,206,616,235,653,270,685,277,690,274,695,266,689,231,657,201,619,177,578,156,536,128,459,114,405"/>
+<area shape="rect" id="Node000023" href="$classKalmannFilter.html#ac14c59a7a192b2f23846310cb50257eb" title="Performs the update step of the Kalman Filter." alt="" coords="268,748,492,773"/>
+<area shape="poly" id="edge23_Node000001_Node000023" title=" " alt="" coords="118,404,129,464,155,554,175,604,200,652,232,697,270,735,276,739,273,744,266,739,227,700,196,655,170,606,150,556,124,465,113,405"/>
+<area shape="rect" id="Node000003" href="$classUtils.html#ac5683fd4ca4e18f8752e8806aa42116f" title="Calculates the distance between two geographic coordinates using the Vincenty formula." alt="" coords="543,5,712,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="480,15,529,15,529,21,480,21"/>
+<area shape="rect" id="Node000015" href="$classVehicle.html#a13709e8a13c59dcdd6caa62b14b05d9c" title=" " alt="" coords="549,649,706,675"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="460,659,535,659,535,665,460,665"/>
+<area shape="rect" id="Node000016" href="$classVehicle.html#a30c180908bd76de5e1fc715911db4035" title=" " alt="" coords="540,699,715,724"/>
+<area shape="poly" id="edge15_Node000014_Node000016" title=" " alt="" coords="445,672,550,693,549,699,444,677"/>
+<area shape="rect" id="Node000017" href="$classVehicle.html#a65ffdf923ad2805ff507187f3a088795" title=" " alt="" coords="549,748,705,773"/>
+<area shape="poly" id="edge16_Node000014_Node000017" title=" " alt="" coords="461,672,493,685,509,697,518,710,527,723,541,734,553,740,551,745,539,739,523,726,514,713,505,701,491,690,459,677"/>
+<area shape="rect" id="Node000018" href="$classVehicle.html#a3b842db475557d748a3e0d1341ca53f4" title=" " alt="" coords="554,551,701,576"/>
+<area shape="poly" id="edge17_Node000014_Node000018" title=" " alt="" coords="459,647,491,634,505,623,514,611,523,598,539,585,551,579,553,584,541,590,527,601,518,614,509,627,493,639,461,652"/>
+<area shape="rect" id="Node000019" href="$classVehicle.html#a659e60944b4b026dd48b560c90b1041f" title=" " alt="" coords="567,600,687,625"/>
+<area shape="poly" id="edge18_Node000014_Node000019" title=" " alt="" coords="444,647,553,625,554,630,445,652"/>
+<area shape="poly" id="edge21_Node000021_Node000005" title=" " alt="" coords="468,548,490,536,515,515,537,491,573,437,599,384,616,340,621,342,604,386,578,440,541,494,519,519,494,540,470,553"/>
+</map>

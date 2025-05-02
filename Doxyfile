@@ -1,0 +1,76 @@
+# Doxyfile for KalmanFilters project
+
+#---------------------------------------------------------------------------
+# Project identification
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "KalmanFilters"
+PROJECT_BRIEF          = "Real-time bus tracking with Kalman filtering"
+PROJECT_NUMBER         = "1.0"
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+
+#---------------------------------------------------------------------------
+# Build configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = .
+
+#---------------------------------------------------------------------------
+# Input
+#---------------------------------------------------------------------------
+INPUT                  = JsonFetcher \
+                         src
+FILE_PATTERNS          = *.cpp \
+                         *.c \
+                         *.h \
+                         *.hpp
+RECURSIVE              = YES
+EXCLUDE                = build \
+                         cmake-build-debug \
+                         Dataset
+EXCLUDE_PATTERNS       = */CMakeFiles/*
+
+#---------------------------------------------------------------------------
+# Source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+REFERENCED_BY_RELATION = NO
+REFERENCES_RELATION    = NO
+
+#---------------------------------------------------------------------------
+# HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+GENERATE_TREEVIEW      = YES
+
+#---------------------------------------------------------------------------
+# LaTeX output (disable)
+#---------------------------------------------------------------------------
+GENERATE_LATEX         = NO
+
+#---------------------------------------------------------------------------
+# Dot (graphviz) support
+#---------------------------------------------------------------------------
+HAVE_DOT               = YES
+DOT_IMAGE_FORMAT       = png
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+
+#---------------------------------------------------------------------------
+# Other options
+#---------------------------------------------------------------------------
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
