@@ -3,6 +3,7 @@
  * @brief Contains the implementation of the Application class which manages the Kalman filter execution and menu system.
  */
 #include "Application.h"
+#include "Utils.h"
 
 /**
  * @brief Main dispatcher that handles user interaction based on menu options.
@@ -190,7 +191,7 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
 
         std::cout << "Total Distance: " << totalDistance << '\n';
 
-
+        Utils utils;
         MatrixXd measurements = MatrixXd::Zero(1,3);
         std::vector<double> times;
 
@@ -201,11 +202,14 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
         Matrix<double,1,3> C {{1,0,0}};
 
         MatrixXd P0; P0.resize(3,3); P0 = MatrixXd::Identity(3,3);
-        Matrix<double,1,1> R {{5}};
+        Matrix<double,1,1> R {{3}}; // valor calibrado, mais desconfiança em dados GPS
         Matrix<double,3,1> x0 {{0},{0},{0}};
-        Matrix<double,3,3> Q {{0.1, 0, 0},
-                       {0, 0.1, 0},
-                       {0, 0, 0.01}};
+        //valor calibrado
+        Matrix<double,3,3> Q {
+            {0.5, 0, 0},
+            {0, 0.5, 0},
+            {0, 0, 0.1}
+        };
 
         MatrixXd inputMeasurements, outputMeasurements;
         //Since we are only dealing with distances
@@ -213,6 +217,7 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
         outputMeasurements.resize(3,1);
         outputMeasurements.setZero();
         inputMeasurements.setZero();
+        double ETA = -1;
 
 
         if (dataChoice == 1) {
@@ -249,7 +254,7 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
 
                     // Calculate ETA (only if we've moved and have reasonable velocity)
                     if (distance > 10 && velocity > 0.1) {
-                        double ETA = (totalDistance - distance) / velocity;
+                        ETA = (totalDistance - distance) / velocity;
                         std::cout << "ETA: " << ETA
                                   << " Travelled: " << distance
                                   << " Velocity: " << velocity << std::endl;
@@ -267,8 +272,10 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
             KalmannFilter kf(A, C, Q, R, P0, x0, 3000); // 0 = unlimited samples
             auto lastUpdateTime = high_resolution_clock::now();
             double lastDistance = 0;
+            int busComes = 0;
 
             while (true) {
+
                 //Refresh GPS data
                 try {
                     this->portoParser->parseVehicles(std::string(JSON_FILE_PATH));
@@ -289,7 +296,7 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
                         busFound = true;
 
                         double currentDistance = Utils::calculateBusDistance(shapes, shape_id, vehicle.getCoordinates());
-                        if (currentDistance < 200) break;
+
 
                         //Calculate time since last update
                         auto now = high_resolution_clock::now();
@@ -309,16 +316,19 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
                             double distance = state(0,0);
                             double velocity = state(1,0);
 
-                            double ETA = (totalDistance - distance) / velocity;
+                            ETA = (totalDistance - distance) / velocity;
                             std::cout << "\n--- Real-time Update ---\n";
                             std::cout << "Current Position: " << currentDistance << "m from start\n";
                             std::cout << "Filtered Position: " << distance << "m from start\n";
-                            std::cout << "Estimated Velocity: " << velocity << " m/s\n";
+                            std::cout << "(For future development) Estimated Velocity: " << velocity << " m/s\n";
+                            if(ETA < 0) busComes++;
+                            if (busComes > 3) goto END;
                             std::cout << "ETA: " << ETA << " seconds (" << ETA/60 << " minutes)\n";
-                            if (ETA < 0) { goto END;
+
+                            utils.storeResults(stop_id,bus_line,direction,ETA);
                             break;
                         } catch (std::exception &e) {
-                            std::cerr << "Error updating vehicle data: " << e.what() << std::endl;
+                            std::cerr << "Error updating kalmann filter: " << e.what() << std::endl;
                         }
                     }
                 }
@@ -331,12 +341,9 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
             }
         }
     END:
+
+    //clearScreen();
     std::cout << "Your bus has arrived!\n";
-    std::string a;
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::getline(std::cin, a);
-    clearScreen();
     std::cout << "\n\nWhat would you like to do next:\n"
               << "1 - Return to main menu.\n"
               << "2 - Exit " << "\n";

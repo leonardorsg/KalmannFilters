@@ -1,5 +1,4 @@
-/snap/clion/332/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/332/bin/ninja/linux/x64/ninja -G Ninja -S /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters -B /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/cmake-build-debug
--- Found CURL: /usr/lib/x86_64-linux-gnu/libcurl.so (found version "8.5.0")
+/snap/clion/341/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/341/bin/ninja/linux/x64/ninja -G Ninja -DPython_EXECUTABLE=/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/.venv/bin/python -DPython3_EXECUTABLE=/home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/.venv/bin/python -S /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters -B /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/cmake-build-debug
 -- Configuring done (0.1s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/leonardorsg/Documents/FEUP/2024-2025-.2/OPT/KalmannFilters/cmake-build-debug

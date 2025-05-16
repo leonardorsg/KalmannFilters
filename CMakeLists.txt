@@ -19,7 +19,6 @@ include_directories(${EIGEN3_INCLUDE_DIRS})
 add_executable(KalmannFilter
         ${CMAKE_SOURCE_DIR}/src/Application.cpp
         ${CMAKE_SOURCE_DIR}/src/main.cpp
-        ${CMAKE_SOURCE_DIR}/src/MutablePriorityQueue.h
         ${CMAKE_SOURCE_DIR}/src/Parser.h
         ${CMAKE_SOURCE_DIR}/src/GTFS/agency.h
         src/GTFS/calendar.h

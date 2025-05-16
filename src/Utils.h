@@ -27,7 +27,10 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <sys/stat.h>
 #include <algorithm>
+#include <fstream>
+#include <iomanip>
 
 using namespace Eigen;
 
@@ -273,6 +276,63 @@ class Utils {
         }
 
         return tripDistances;
+    }
+
+    void storeResults(const std::string& stop_id, const std::string& bus_line, int direction, double eta) {
+        const std::string filename = "../TestResults/kf_results.csv";
+        std::vector<std::tuple<std::string, std::string, int, double>> rows;
+        bool found = false;
+        bool isEmpty = fileExistsAndEmpty(filename);
+
+        // Read file only if it exists and is not empty
+        if (!isEmpty) {
+            std::ifstream inFile(filename);
+            std::string line;
+            bool skipHeader = true;
+
+            while (std::getline(inFile, line)) {
+                if (skipHeader) {
+                    skipHeader = false;
+                    continue;
+                }
+                std::istringstream ss(line);
+                std::string s_id, b_line, dir_str, eta_str;
+                std::getline(ss, s_id, ',');
+                std::getline(ss, b_line, ',');
+                std::getline(ss, dir_str, ',');
+                std::getline(ss, eta_str, ',');
+
+                int dir = std::stoi(dir_str);
+                double e = std::stod(eta_str);
+
+                if (s_id == stop_id && b_line == bus_line) {
+                    rows.emplace_back(s_id, b_line, direction, eta);  // update this row
+                    found = true;
+                } else {
+                    rows.emplace_back(s_id, b_line, dir, e);  // keep existing
+                }
+            }
+            inFile.close();
+        }
+
+        // If no match found, add new row
+        if (!found) {
+            rows.emplace_back(stop_id, bus_line, direction, eta);
+        }
+
+        // Write back to file
+        std::ofstream outFile(filename, std::ios::trunc);
+        outFile << "stop_id,bus_line,direction,eta\n";
+        for (const auto& [s_id, b_line, dir, e] : rows) {
+            outFile << s_id << "," << b_line << "," << dir << "," << e/60 << "\n";
+        }
+        outFile.close();
+    }
+
+    bool fileExistsAndEmpty(const std::string& filename) {
+        struct stat fileStat;
+        if (stat(filename.c_str(), &fileStat) != 0) return true;
+        return fileStat.st_size == 0;
     }
 
     /**
