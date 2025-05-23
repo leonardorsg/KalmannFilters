@@ -3,6 +3,9 @@
  * @brief Contains the implementation of the Application class which manages the Kalman filter execution and menu system.
  */
 #include "Application.h"
+
+#include <set>
+
 #include "Utils.h"
 
 /**
@@ -202,13 +205,13 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
         Matrix<double,1,3> C {{1,0,0}};
 
         MatrixXd P0; P0.resize(3,3); P0 = MatrixXd::Identity(3,3);
-        Matrix<double,1,1> R {{3}}; // valor calibrado, mais desconfiança em dados GPS
+        Matrix<double,1,1> R {10}; // valor calibrado, mais desconfiança em dados GPS
         Matrix<double,3,1> x0 {{0},{0},{0}};
         //valor calibrado
         Matrix<double,3,3> Q {
-            {0.5, 0, 0},
-            {0, 0.5, 0},
-            {0, 0, 0.1}
+            {0.1, 0, 0},
+            {0, 0.01, 0},
+            {0, 0, 0.01}
         };
 
         MatrixXd inputMeasurements, outputMeasurements;
@@ -273,6 +276,8 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
             auto lastUpdateTime = high_resolution_clock::now();
             double lastDistance = 0;
             int busComes = 0;
+            std::set<int> goneBuses;
+            bool busFound = false;
 
             while (true) {
 
@@ -288,48 +293,60 @@ void Application::runKalmannFilter(std::string bus_line, std::string stop_id, in
                     continue;
                 }
 
-                bool busFound = false;
+                const auto& vehicles = this->portoParser->getVehicles();
+                const Vehicle* closestVehicle = nullptr;
+                double minDistance = std::numeric_limits<double>::max();
 
-                for (auto vehicle : this->portoParser->getVehicles()) {
+                // 1. Find the closest vehicle matching the criteria
+                for (const auto& vehicle : vehicles) {
                     if (vehicle.getRouteId() == std::stoi(bus_line)
-                        && vehicle.getDirection() == direction) {
-                        busFound = true;
+                        && vehicle.getDirection() == direction
+                        && goneBuses.find(vehicle.getTrip()) == goneBuses.end()) {
 
-                        double currentDistance = Utils::calculateBusDistance(shapes, shape_id, vehicle.getCoordinates());
-
-
-                        //Calculate time since last update
-                        auto now = high_resolution_clock::now();
-                        double delta = duration_cast<duration<double>>(now - lastUpdateTime).count();
-                        lastUpdateTime = now;
-
-                        //Kalman Filter update
-                        try {
-                            kf.predictEstimate(MatrixXd::Zero(3,1));
-
-                            Matrix<double,3,1> measurementVector;
-                            measurementVector << currentDistance, 0, 0;  // Position, velocity, acceleration
-
-
-                            MatrixXd state = kf.updateEstimate(measurementVector);
-
-                            double distance = state(0,0);
-                            double velocity = state(1,0);
-
-                            ETA = (totalDistance - distance) / velocity;
-                            std::cout << "\n--- Real-time Update ---\n";
-                            std::cout << "Current Position: " << currentDistance << "m from start\n";
-                            std::cout << "Filtered Position: " << distance << "m from start\n";
-                            std::cout << "(For future development) Estimated Velocity: " << velocity << " m/s\n";
-                            if(ETA < 0) busComes++;
-                            if (busComes > 3) goto END;
-                            std::cout << "ETA: " << ETA << " seconds (" << ETA/60 << " minutes)\n";
-
-                            utils.storeResults(stop_id,bus_line,direction,ETA);
-                            break;
-                        } catch (std::exception &e) {
-                            std::cerr << "Error updating kalmann filter: " << e.what() << std::endl;
+                        double currentDistance = Utils::vincentyFormula(stop.getLocation(),vehicle.getCoordinates());
+                        if (currentDistance < minDistance) {
+                            minDistance = currentDistance;
+                            closestVehicle = &vehicle;
                         }
+                        }
+                }
+
+                // 2. If found, update Kalman filter with that vehicle
+                if (closestVehicle) {
+                    busFound = true;
+
+
+
+                    try {
+                        kf.predictEstimate(MatrixXd::Zero(3,1));
+
+                        Matrix<double,3,1> measurementVector;
+                        measurementVector << minDistance, 0, 0;
+
+
+                        MatrixXd state = kf.updateEstimate(measurementVector);
+
+                        double distance = state(0,0);
+                        double velocity = state(1,0);
+
+                        ETA = (totalDistance - distance) / velocity;
+                        std::cout << "\n--- Real-time Update ---\n";
+                        std::cout << "Current Position: " << minDistance << "m from start\n";
+                        std::cout << "Filtered Position: " << distance << "m from start\n";
+                        std::cout << "Estimated Velocity: " << velocity << " m/s\n";
+
+                        if (ETA < 0) busComes++;
+                        if (busComes == 3) {
+                            goneBuses.insert(closestVehicle->getTrip());
+                            busComes = 0;
+                        }
+
+
+
+                        std::cout << "ETA: " << ETA << " seconds (" << ETA/60 << " minutes)\n";
+                        utils.storeResults(stop_id, bus_line, direction, ETA);
+                    } catch (std::exception &e) {
+                        std::cerr << "Error updating Kalman filter: " << e.what() << std::endl;
                     }
                 }
 

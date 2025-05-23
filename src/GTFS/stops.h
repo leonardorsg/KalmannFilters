@@ -7,6 +7,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "Utils.h"
+
 class Stops_times {
     private:
         std::string trip_id;
@@ -85,6 +87,12 @@ class Stops {
         std::string getStopLat() const { return stop_lat; }
         std::string getStopLon() const { return stop_lon; }
         std::string getZoneId() const { return zone_id; }
+        Coordinates getLocation() const {
+            Coordinates location;
+            location.Latitude = std::stod(stop_lat);
+            location.Longitude = std::stod(stop_lon);
+            return location;
+        }
         std::string getStopUrl() const { return stop_url; }
 
         //Setters
