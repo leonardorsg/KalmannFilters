@@ -6,8 +6,8 @@
 #define STOPS_H
 #include <string>
 #include <unordered_map>
+#include <coordinates.h>
 
-#include "Utils.h"
 
 class Stops_times {
     private:
@@ -132,7 +132,7 @@ class Stops {
 
 
         // Getter for accessing the hash table
-        std::unordered_map<std::string, Stops_times> &getStopTimesMap() {
+        const std::unordered_map<std::string, Stops_times> &getStopTimesMap() const {
             return stop_times_map;
         }
 

@@ -1,1 +1,3 @@
-/usr/bin/c++ CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.o -o JsonDataFetcher  /usr/lib/x86_64-linux-gnu/libcurl.so 
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\JsonDataFetcher.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\JsonDataFetcher.dir/objects.a @CMakeFiles\JsonDataFetcher.dir\objects1.rsp
+C:\msys64\ucrt64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\JsonDataFetcher.dir/objects.a -Wl,--no-whole-archive -o JsonDataFetcher.exe -Wl,--out-implib,libJsonDataFetcher.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\JsonDataFetcher.dir\linkLibs.rsp

@@ -6,7 +6,8 @@
 #define VEHICLE_H
 
 #include <string>
-#include "Utils.h"
+#include <../GTFS/coordinates.h>
+#include <vector>
 
 
 
@@ -33,6 +34,7 @@ public:
         this->coordinates.Longitude = std::stod(longitude);
         this->trip = trip;
     }
+
 
     //Getters
     int getRouteId() const { return route_id; }

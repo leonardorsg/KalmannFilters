@@ -1,1 +1,3 @@
-/usr/bin/c++ CMakeFiles/KalmannFilter.dir/src/Application.cpp.o CMakeFiles/KalmannFilter.dir/src/main.cpp.o CMakeFiles/KalmannFilter.dir/src/KalmannFilter.cpp.o -o KalmannFilter 
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\KalmannFilter.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\KalmannFilter.dir/objects.a @CMakeFiles\KalmannFilter.dir\objects1.rsp
+C:\msys64\ucrt64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\KalmannFilter.dir/objects.a -Wl,--no-whole-archive -o KalmannFilter.exe -Wl,--out-implib,libKalmannFilter.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\KalmannFilter.dir\linkLibs.rsp

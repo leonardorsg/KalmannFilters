@@ -1,8 +1,10 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.o"
-  "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.o.d"
-  "JsonDataFetcher"
+  "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj"
+  "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj.d"
+  "JsonDataFetcher.exe"
+  "JsonDataFetcher.exe.manifest"
   "JsonDataFetcher.pdb"
+  "libJsonDataFetcher.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -1,0 +1,26 @@
+[
+{
+  "directory": "C:/Users/estagio/Documents/Leo/KalmannFilters/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/KalmannFilter.dir/includes_CXX.rsp -g -o CMakeFiles\\KalmannFilter.dir\\src\\Application.cpp.obj -c C:\\Users\\estagio\\Documents\\Leo\\KalmannFilters\\src\\Application.cpp",
+  "file": "C:/Users/estagio/Documents/Leo/KalmannFilters/src/Application.cpp",
+  "output": "CMakeFiles/KalmannFilter.dir/src/Application.cpp.obj"
+},
+{
+  "directory": "C:/Users/estagio/Documents/Leo/KalmannFilters/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/KalmannFilter.dir/includes_CXX.rsp -g -o CMakeFiles\\KalmannFilter.dir\\src\\main.cpp.obj -c C:\\Users\\estagio\\Documents\\Leo\\KalmannFilters\\src\\main.cpp",
+  "file": "C:/Users/estagio/Documents/Leo/KalmannFilters/src/main.cpp",
+  "output": "CMakeFiles/KalmannFilter.dir/src/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/estagio/Documents/Leo/KalmannFilters/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/KalmannFilter.dir/includes_CXX.rsp -g -o CMakeFiles\\KalmannFilter.dir\\src\\services\\KalmannFilter.cpp.obj -c C:\\Users\\estagio\\Documents\\Leo\\KalmannFilters\\src\\services\\KalmannFilter.cpp",
+  "file": "C:/Users/estagio/Documents/Leo/KalmannFilters/src/services/KalmannFilter.cpp",
+  "output": "CMakeFiles/KalmannFilter.dir/src/services/KalmannFilter.cpp.obj"
+},
+{
+  "directory": "C:/Users/estagio/Documents/Leo/KalmannFilters/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/JsonDataFetcher.dir/includes_CXX.rsp -g -o CMakeFiles\\JsonDataFetcher.dir\\JsonFetcher\\JsonDataFetcher.cpp.obj -c C:\\Users\\estagio\\Documents\\Leo\\KalmannFilters\\JsonFetcher\\JsonDataFetcher.cpp",
+  "file": "C:/Users/estagio/Documents/Leo/KalmannFilters/JsonFetcher/JsonDataFetcher.cpp",
+  "output": "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj"
+}
+]
