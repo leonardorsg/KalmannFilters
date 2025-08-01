@@ -15,50 +15,6 @@ using namespace std::chrono;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-// Constructor: this simplified version asks the user for the city and then
-// proceeds to the main menu.  It reuses the parsing logic from the
-// original project.
-Application::Application(std::string env) {
-    this->env = std::move(env);
-    // Prompt the user to select the city
-    restartConstructor:
-    clearScreen();
-    this->portoParser = nullptr;
-    this->bostonParser = nullptr;
-    cout << "Select a city:\n";
-    cout << "1. Porto\n";
-    cout << "2. Boston\n";
-    cout << "Enter your choice: ";
-    string choiceString;
-    cin >> choiceString;
-    if (choiceString == "1") {
-        // Only Porto is implemented here
-        if (!portoParsed) {
-            try {
-                // Construct parser with GTFS file paths
-                portoParser = new Parser(string(DATASET_PATHS_PORTO) + "agency.txt",
-                                       string(DATASET_PATHS_PORTO) + "calendar.txt",
-                                       string(DATASET_PATHS_PORTO) + "routes.txt",
-                                       string(DATASET_PATHS_PORTO) + "stop_times.txt",
-                                       string(DATASET_PATHS_PORTO) + "stops.txt",
-                                       string(DATASET_PATHS_PORTO) + "trips.txt",
-                                       string(DATASET_PATHS_PORTO) + "shapes.txt");
-                cout << portoParser->run() << "\n";
-                portoParsed = true;
-                // Parse vehicles JSON once at startup
-                portoParser->parseVehicles(string(JSON_FILE_PATH));
-            } catch (const exception &e) {
-                cerr << "Error initializing parser: " << e.what() << '\n';
-            }
-        }
-    } else if (choiceString == "2") {
-        // Boston not implemented
-        bostonParsed = true;
-    }
-    clearScreen();
-    showMainMenu();
-}
-
 void Application::clearScreen() {
     if (env == "win") {
         // print many newlines on Windows
@@ -296,7 +252,7 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
             }
 
             portoParser->destroyVehicles();
-            this_thread::sleep_for(seconds(30));
+            this_thread::sleep_for(seconds(120)); // wait for 2 minutes before next update
         }
     }
 
