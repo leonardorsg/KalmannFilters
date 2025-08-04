@@ -516,4 +516,6 @@ CMakeFiles/KalmannFilter.dir/src/Application.cpp.obj: \
  C:/msys64/ucrt64/include/sys/stat.h C:/msys64/ucrt64/include/io.h \
  C:/msys64/ucrt64/include/c++/14.2.0/set \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_set.h \
- C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_multiset.h
+ C:/msys64/ucrt64/include/c++/14.2.0/bits/stl_multiset.h \
+ C:/Users/estagio/Documents/Leo/KalmannFilters/src/services/apply_metrics.h \
+ C:/Users/estagio/Documents/Leo/KalmannFilters/src/services/KalmannFilter.h

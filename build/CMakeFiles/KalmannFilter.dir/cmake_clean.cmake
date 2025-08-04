@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/KalmannFilter.dir/src/Application.cpp.obj.d"
   "CMakeFiles/KalmannFilter.dir/src/main.cpp.obj"
   "CMakeFiles/KalmannFilter.dir/src/main.cpp.obj.d"
+  "CMakeFiles/KalmannFilter.dir/src/services/Apply_metrics.cpp.obj"
+  "CMakeFiles/KalmannFilter.dir/src/services/Apply_metrics.cpp.obj.d"
   "CMakeFiles/KalmannFilter.dir/src/services/KalmannFilter.cpp.obj"
   "CMakeFiles/KalmannFilter.dir/src/services/KalmannFilter.cpp.obj.d"
   "KalmannFilter.exe"

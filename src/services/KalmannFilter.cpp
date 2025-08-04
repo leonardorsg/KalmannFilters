@@ -24,6 +24,10 @@ KalmanFilter::KalmanFilter(double dt,
     H_ << 1.0, 0.0;
 }
 
+void KalmanFilter::setMeasurementNoise(const Eigen::Matrix<double, 1, 1>& R_new) {
+    R_ = R_new;
+}
+
 void KalmanFilter::predict() {
     x_ = F_ * x_;
     P_ = F_ * P_ * F_.transpose() + Q_;

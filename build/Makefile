@@ -213,6 +213,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/services/Apply_metrics.obj: src/services/Apply_metrics.cpp.obj
+.PHONY : src/services/Apply_metrics.obj
+
+# target to build an object file
+src/services/Apply_metrics.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/src/services/Apply_metrics.cpp.obj
+.PHONY : src/services/Apply_metrics.cpp.obj
+
+src/services/Apply_metrics.i: src/services/Apply_metrics.cpp.i
+.PHONY : src/services/Apply_metrics.i
+
+# target to preprocess a source file
+src/services/Apply_metrics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/src/services/Apply_metrics.cpp.i
+.PHONY : src/services/Apply_metrics.cpp.i
+
+src/services/Apply_metrics.s: src/services/Apply_metrics.cpp.s
+.PHONY : src/services/Apply_metrics.s
+
+# target to generate assembly for a file
+src/services/Apply_metrics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/src/services/Apply_metrics.cpp.s
+.PHONY : src/services/Apply_metrics.cpp.s
+
 src/services/KalmannFilter.obj: src/services/KalmannFilter.cpp.obj
 .PHONY : src/services/KalmannFilter.obj
 
@@ -256,6 +280,9 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/services/Apply_metrics.obj
+	@echo ... src/services/Apply_metrics.i
+	@echo ... src/services/Apply_metrics.s
 	@echo ... src/services/KalmannFilter.obj
 	@echo ... src/services/KalmannFilter.i
 	@echo ... src/services/KalmannFilter.s

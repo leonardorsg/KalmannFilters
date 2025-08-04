@@ -209,44 +209,50 @@ class Utils {
      *
      * @param tripShape A map of trip shapes, where each shape is associated with a list of coordinates.
      * @param shape_id The identifier of the bus trip shape.
-     * @param stop_coordinates The coordinates of the bus stop.
+     * @param target The coordinates of the target.
      * @return The distance to the bus stop from the trip's shape, in meters.
      * @throws std::runtime_error if the shape ID is not found or the coordinates are invalid.
      */
-    static double calculateBusDistance(const std::map<std::string,std::vector<Coordinates>>& tripShape,
-                                  const std::string& shape_id,
-                                  const Coordinates& stop_coordinates) {
-        try {
-            double bus_distance = 0;
-            double distance = 0;
-            double shortest_distance = 500000;
-            auto shape_it = tripShape.find(shape_id);
-            if (shape_it == tripShape.end()) {
-                throw std::runtime_error("Shape ID not found");
-            }
-
-            const auto& coordinates = shape_it->second;
-            if (coordinates.empty()) {
-                throw std::runtime_error("No coordinates for shape");
-            }
-
-            for (size_t i = 1; i < coordinates.size(); i++) {
-                bus_distance += vincentyFormula(coordinates[i - 1], coordinates[i]);
-                distance = vincentyFormula(coordinates[i], stop_coordinates);
-                if (distance < shortest_distance) { shortest_distance = distance; }
-                //Calculates distance up until 200m of the bus stop
-                //std::cout << "Distance: " << distance << std::endl;
-            }
-
-            if (distance > 0) return distance;
-            std::ostringstream error_msg;
-            error_msg << "Stop not found within route " << shortest_distance;
-            throw std::runtime_error(error_msg.str());
-        } catch (const std::exception& e) {
-            std::cerr << "Error in calculateBusDistance: " << e.what() << std::endl;
-            return -1.0;
+    static double calculateBusDistance(const std::map<std::string, std::vector<Coordinates>>& tripShape,
+                                   const std::string& shape_id,
+                                   const Coordinates& target) {
+    try {
+        auto shape_it = tripShape.find(shape_id);
+        if (shape_it == tripShape.end()) {
+            throw std::runtime_error("Shape ID not found");
         }
+
+        const auto& coordinates = shape_it->second;
+        if (coordinates.empty()) {
+            throw std::runtime_error("No coordinates for shape");
+        }
+
+        double bus_distance = 0.0;
+        double min_distance = std::numeric_limits<double>::max();
+        double distance_to_return = -1.0;
+
+        for (size_t i = 1; i < coordinates.size(); i++) {
+            double segment_length = vincentyFormula(coordinates[i - 1], coordinates[i]);
+            bus_distance += segment_length;
+
+            double dist_to_target = vincentyFormula(coordinates[i], target);
+            if (dist_to_target < min_distance) {
+                min_distance = dist_to_target;
+                distance_to_return = bus_distance;
+            }
+        }
+
+        if (distance_to_return > 0) return distance_to_return;
+
+        std::ostringstream error_msg;
+        error_msg << "Target not found within route. Closest distance: " << min_distance;
+        throw std::runtime_error(error_msg.str());
+    } catch (const std::exception& e) {
+        std::cerr << "Error in calculateBusDistance: " << e.what() << std::endl;
+        return -1.0;
     }
+}
+
 
     /**
      * @brief Calculates the total distance for each trip in a set of trips.

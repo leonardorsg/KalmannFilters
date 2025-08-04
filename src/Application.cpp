@@ -9,6 +9,7 @@
 #include <set>
 #include <thread>
 #include <vector>
+#include <../services/apply_metrics.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -110,10 +111,10 @@ void Application::showGoBackMenu(int /*functionNumber*/, const string &functionN
 
 void Application::runKalmannFilter(string bus_line, string stop_id, int direction) {
     int dataChoice;
-    cout << "Choose the type of data you want to use: " << endl;
-    cout << "1. Virtual Data (Random)." << endl;
-    cout << "2. GPS Measurements." << endl;
-    cout << "Select: ";
+    cout << "Choose the type of data you want to use:\n"
+         << "1. Virtual Data (Random).\n"
+         << "2. GPS Measurements.\n"
+         << "Select: ";
     cin >> dataChoice;
 
     if (!bus_line.empty() && (bus_line.back() == 'm' || bus_line.back() == 'M')) {
@@ -124,12 +125,16 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
     const auto &stops  = portoParser->getStops();
     const auto &shapes = portoParser->getShapes();
 
+    // Make stop_id lowercase
+    transform(stop_id.begin(), stop_id.end(), stop_id.begin(), ::tolower);
+
     if (!stops.count(stop_id)) throw runtime_error("Invalid stop ID");
 
     string shape_id;
     for (const auto &tripPair : trips) {
         if (tripPair.second.getRouteId() == bus_line && tripPair.second.getDirectionId() == direction) {
             shape_id = tripPair.second.getShapeId();
+            break;
         }
     }
     if (shape_id.empty()) throw runtime_error("Invalid bus line or direction");
@@ -141,8 +146,8 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
     if (totalDistance < 0) throw runtime_error("Could not calculate route distance");
     cout << "Total Distance: " << totalDistance << '\n';
 
-    // Novo filtro simples com 2 estados: posição e velocidade
-    double dt = 5.0;  // intervalo de tempo em segundos
+    // Kalman Filter (2 estados)
+    double dt = 5.0;
     Eigen::Matrix2d Q;
     Q << 10.0, 0.0,
          0.0, 5.0;
@@ -151,11 +156,15 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
     R << 25.0;
 
     Eigen::Vector2d x0;
-    x0 << 0.0, 6.0; // posição inicial 0, velocidade média inicial 6 m/s
+    x0 << 0.0, 6.0;
 
     Eigen::Matrix2d P0 = Eigen::Matrix2d::Identity() * 10;
 
     KalmanFilter kf(dt, Q, R, x0, P0);
+
+    // Aplicar métricas contextuais da API
+    double eta_delay_from_api = 0.0;
+    applyContextualMetricsToKalman(kf, bus_line, stop_id, direction, eta_delay_from_api);
 
     Utils utils;
     double ETA = -1.0;
@@ -167,18 +176,16 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
 
         for (unsigned int i = 0; i < maxSamples; ++i) {
             kf.predict();
-
             Eigen::Matrix<double,1,1> z;
             z << measurements(i, 0);
-
             kf.update(z);
 
             Eigen::Vector2d state = kf.state();
             double distance = state(0);
-            double velocity = std::clamp(state(1), 0.1, 30.0);  // limitar velocidade realista
+            double velocity = std::clamp(state(1), 0.1, 30.0);
 
             if (distance > 10.0) {
-                ETA = (totalDistance - distance) / velocity;
+                ETA = (totalDistance - distance) / velocity + eta_delay_from_api;
                 cout << "ETA: " << ETA << "s"
                      << " | Travelled: " << distance
                      << " | Velocity: " << velocity << " m/s\n";
@@ -186,8 +193,6 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
         }
 
     } else if (dataChoice == 2) {
-        auto lastUpdateTime = high_resolution_clock::now();
-        double lastDistance = 0.0;
         int busComes = 0;
         set<int> goneBuses;
         bool busFound = false;
@@ -202,17 +207,31 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
                 continue;
             }
 
+            /* Verifica todos os veículos ativos da linha e direção especificadas,
+             e seleciona aquele que está mais próximo da paragem ao longo do percurso (shape).
+             A comparação é feita com base na distância acumulada desde o início do trajeto (calculateBusDistance),
+             garantindo que apenas veículos que ainda não passaram pela paragem (ou seja, com distância relativa positiva)
+             sejam considerados. O veículo selecionado é aquele cuja distância restante até a paragem é a menor.
+            */
+
             const auto &vehicles = portoParser->getVehicles();
-            const Vehicle *closestVehicle = nullptr;
-            double minDistance = numeric_limits<double>::max();
+            const Vehicle* closestVehicle = nullptr;
+            double stopProgress = Utils::calculateBusDistance(shapes, shape_id, stop.getLocation());
+            double minRelativeDistance = std::numeric_limits<double>::max();
 
             for (const auto &vehicle : vehicles) {
                 if (vehicle.getRouteId() == stoi(bus_line)
                     && vehicle.getDirection() == direction
                     && goneBuses.find(vehicle.getTrip()) == goneBuses.end()) {
-                    double d = Utils::vincentyFormula(stop.getLocation(), vehicle.getCoordinates());
-                    if (d < minDistance) {
-                        minDistance = d;
+                    
+                    double vehicleProgress = Utils::calculateBusDistance(shapes, shape_id, vehicle.getCoordinates());
+
+                    if (vehicleProgress < 0) continue; // invalid position
+
+                    double relativeDistance = stopProgress - vehicleProgress;
+
+                    if (relativeDistance > 0 && relativeDistance < minRelativeDistance) {
+                        minRelativeDistance = relativeDistance;
                         closestVehicle = &vehicle;
                     }
                 }
@@ -223,36 +242,40 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
 
                 kf.predict();
                 Eigen::Matrix<double,1,1> z;
-                z << minDistance;
+                z << minRelativeDistance;
                 kf.update(z);
 
                 Eigen::Vector2d state = kf.state();
                 double distance = state(0);
-                double velocity = std::clamp(state(1), 0.1, 50.0); // evitar velocidade negativa ou explosiva
-
-                ETA = (totalDistance - distance) / velocity;
+                double velocity = std::clamp(state(1), 0.1, 50.0);
+                ETA = (totalDistance - distance) / velocity + eta_delay_from_api;
 
                 cout << "\n--- Real-time Update ---\n";
-                cout << "Current Position: " << minDistance << "m from stop\n";
+                cout << "Current Position: " << minRelativeDistance << "m from stop\n";
                 cout << "Filtered Position: " << distance << "m from stop\n";
                 cout << "Estimated Velocity: " << velocity << " m/s\n";
-                cout << "ETA: " << ETA << " seconds (" << ETA / 60.0 << " minutes)\n";
+                cout << "ETA (corrigido): " << ETA << " seconds (" << ETA / 60.0 << " minutes)\n";
 
-                if (ETA < 0) busComes++;
+                cout << "Vehicle ID: " << closestVehicle->getRouteId() << "\n";
+                cout << "Trip ID: " << closestVehicle->getTrip() << "\n";
+
+
+                if (ETA <= 0) busComes++;
                 if (busComes == 3) {
                     goneBuses.insert(closestVehicle->getTrip());
                     busComes = 0;
+                    break;
                 }
 
                 utils.storeResults(stop_id, bus_line, direction, ETA);
             }
 
             if (!busFound) {
-                cout << "Bus not found in current data. Retrying...\n";
+                cout << "The bus didn't begin its route yet. Retrying...\n";
             }
 
             portoParser->destroyVehicles();
-            this_thread::sleep_for(seconds(120)); // wait for 2 minutes before next update
+            this_thread::sleep_for(seconds(120));
         }
     }
 

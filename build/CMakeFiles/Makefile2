@@ -87,12 +87,12 @@ clean: CMakeFiles/JsonDataFetcher.dir/clean
 CMakeFiles/KalmannFilter.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles --progress-num=3,4,5,6 "Built target KalmannFilter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles --progress-num=3,4,5,6,7 "Built target KalmannFilter"
 .PHONY : CMakeFiles/KalmannFilter.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/KalmannFilter.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/KalmannFilter.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles 0
 .PHONY : CMakeFiles/KalmannFilter.dir/rule
@@ -104,7 +104,7 @@ KalmannFilter: CMakeFiles/KalmannFilter.dir/rule
 # codegen rule for target.
 CMakeFiles/KalmannFilter.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles --progress-num=3,4,5,6 "Finished codegen for target KalmannFilter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles --progress-num=3,4,5,6,7 "Finished codegen for target KalmannFilter"
 .PHONY : CMakeFiles/KalmannFilter.dir/codegen
 
 # clean rule for target.

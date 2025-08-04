@@ -43,6 +43,8 @@ public:
      */
     void predict();
 
+    void setMeasurementNoise(const Eigen::Matrix<double, 1, 1>& R_new);
+
     /**
      * Perform the update step with an observation.
      *
