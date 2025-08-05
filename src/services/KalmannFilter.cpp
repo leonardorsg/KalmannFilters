@@ -28,6 +28,14 @@ void KalmanFilter::setMeasurementNoise(const Eigen::Matrix<double, 1, 1>& R_new)
     R_ = R_new;
 }
 
+void KalmanFilter::setState(const Eigen::Vector2d& x0) {
+    x_ = x0;
+}
+
+void KalmanFilter::setCovariance(const Eigen::Matrix2d& P0) {
+    P_ = P0;
+}
+
 void KalmanFilter::predict() {
     x_ = F_ * x_;
     P_ = F_ * P_ * F_.transpose() + Q_;

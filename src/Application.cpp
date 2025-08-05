@@ -147,18 +147,18 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
     cout << "Total Distance: " << totalDistance << '\n';
 
     // Kalman Filter (2 estados)
-    double dt = 5.0;
+    double dt = 120.0;
     Eigen::Matrix2d Q;
-    Q << 10.0, 0.0,
-         0.0, 5.0;
+    Q << 100.0, 0.0,
+         0.0, 25.0;
 
     Eigen::Matrix<double,1,1> R;
     R << 25.0;
 
     Eigen::Vector2d x0;
-    x0 << 0.0, 6.0;
+    x0 << 0.0, 0.0;
 
-    Eigen::Matrix2d P0 = Eigen::Matrix2d::Identity() * 10;
+    Eigen::Matrix2d P0 = Eigen::Matrix2d::Identity() * 15;
 
     KalmanFilter kf(dt, Q, R, x0, P0);
 
@@ -208,7 +208,7 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
             }
 
             /* Verifica todos os veículos ativos da linha e direção especificadas,
-             e seleciona aquele que está mais próximo da paragem ao longo do percurso (shape).
+            // e seleciona aquele que está mais próximo da paragem ao longo do percurso (shape).
              A comparação é feita com base na distância acumulada desde o início do trajeto (calculateBusDistance),
              garantindo que apenas veículos que ainda não passaram pela paragem (ou seja, com distância relativa positiva)
              sejam considerados. O veículo selecionado é aquele cuja distância restante até a paragem é a menor.
@@ -237,6 +237,8 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
                 }
             }
 
+            double vehicleProgress = closestVehicle ? Utils::calculateBusDistance(shapes, shape_id, closestVehicle->getCoordinates()) : -1;
+
             if (closestVehicle) {
                 busFound = true;
 
@@ -247,12 +249,12 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
 
                 Eigen::Vector2d state = kf.state();
                 double distance = state(0);
-                double velocity = std::clamp(state(1), 0.1, 50.0);
+                double velocity = std::clamp(state(1), 0.1, 30.0);
                 ETA = (totalDistance - distance) / velocity + eta_delay_from_api;
 
                 cout << "\n--- Real-time Update ---\n";
                 cout << "Current Position: " << minRelativeDistance << "m from stop\n";
-                cout << "Filtered Position: " << distance << "m from stop\n";
+                cout << "Filtered Position: " << distance << "m from start of route\n";
                 cout << "Estimated Velocity: " << velocity << " m/s\n";
                 cout << "ETA (corrigido): " << ETA << " seconds (" << ETA / 60.0 << " minutes)\n";
 

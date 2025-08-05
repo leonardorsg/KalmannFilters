@@ -88,8 +88,8 @@ void fetchAndStorePeriodically(const std::string& url, const std::string& output
                 // Parse JSON
                 json jsonData = json::parse(jsonResponse);
 
-                // Store JSON into a file
-                std::ofstream outputFile(outputFilePath);
+                // Clean the file before writing (truncate)
+                std::ofstream outputFile(outputFilePath, std::ofstream::trunc);
                 if (outputFile.is_open()) {
                     outputFile << jsonData.dump(4); // Pretty print JSON with 4 spaces
                     outputFile.close();
