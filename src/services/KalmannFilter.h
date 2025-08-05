@@ -46,7 +46,7 @@ public:
     void setMeasurementNoise(const Eigen::Matrix<double, 1, 1>& R_new);
     void setState(const Eigen::Vector2d& x0);
     void setCovariance(const Eigen::Matrix2d& P0);
-
+    void setDt(double dt);
     /**
      * Perform the update step with an observation.
      *

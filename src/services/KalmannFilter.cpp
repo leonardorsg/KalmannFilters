@@ -18,7 +18,7 @@ KalmanFilter::KalmanFilter(double dt,
                                        const Eigen::Matrix2d& P0)
     : dt_(dt), Q_(Q), R_(R), x_(x0), P_(P0)
 {
-    F_ << 1.0, dt_,
+    F_ << 1.0, -dt_,
           0.0, 1.0;
 
     H_ << 1.0, 0.0;
@@ -34,6 +34,12 @@ void KalmanFilter::setState(const Eigen::Vector2d& x0) {
 
 void KalmanFilter::setCovariance(const Eigen::Matrix2d& P0) {
     P_ = P0;
+}
+
+void KalmanFilter::setDt(double dt) {
+    dt_ = dt;
+    F_ << 1.0, -dt_,
+          0.0, 1.0;
 }
 
 void KalmanFilter::predict() {

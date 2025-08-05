@@ -237,7 +237,6 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
                 }
             }
 
-            double vehicleProgress = closestVehicle ? Utils::calculateBusDistance(shapes, shape_id, closestVehicle->getCoordinates()) : -1;
 
             if (closestVehicle) {
                 busFound = true;
@@ -250,11 +249,11 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
                 Eigen::Vector2d state = kf.state();
                 double distance = state(0);
                 double velocity = std::clamp(state(1), 0.1, 30.0);
-                ETA = (totalDistance - distance) / velocity + eta_delay_from_api;
+                ETA = distance / velocity + eta_delay_from_api;
 
                 cout << "\n--- Real-time Update ---\n";
                 cout << "Current Position: " << minRelativeDistance << "m from stop\n";
-                cout << "Filtered Position: " << distance << "m from start of route\n";
+                cout << "Filtered Position: " << distance << "m\n";
                 cout << "Estimated Velocity: " << velocity << " m/s\n";
                 cout << "ETA (corrigido): " << ETA << " seconds (" << ETA / 60.0 << " minutes)\n";
 
