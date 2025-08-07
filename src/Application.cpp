@@ -60,12 +60,14 @@ void Application::run(int processedKey) {
             cout << "Please enter the direction: ";
             cin >> direction;
             cout << '\n';
+            clearScreen();
             runKalmannFilter(bus_line, stop_id, direction);
             break;
         }
         case 2:
             cout << "Thank you very much and Bye-Bye.\n";
             delay(4000);
+            exit(0);
             break;
         default:
             showMainMenu();
@@ -114,8 +116,10 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
     cout << "Choose the type of data you want to use:\n"
          << "1. Virtual Data (Random).\n"
          << "2. GPS Measurements.\n"
+         << "3. GTFS Data.\n"
          << "Select: ";
     cin >> dataChoice;
+    clearScreen();
 
     if (!bus_line.empty() && (bus_line.back() == 'm' || bus_line.back() == 'M')) {
         bus_line.pop_back();
@@ -147,7 +151,7 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
     cout << "Total Distance: " << totalDistance << '\n';
 
     // Kalman Filter (2 estados)
-    double dt = 120.0;
+    double dt = 60.0;
     Eigen::Matrix2d Q;
     Q << 100.0, 0.0,
          0.0, 25.0;
@@ -196,6 +200,7 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
         int busComes = 0;
         set<int> goneBuses;
         bool busFound = false;
+        bool firstMeasurement = true;
 
         while (true) {
             try {
@@ -236,9 +241,26 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
                     }
                 }
             }
-
-
+            
             if (closestVehicle) {
+
+                // Inicializa o estado do filtro na primeira medição real
+                if (firstMeasurement) {
+                    Eigen::Vector2d x0;
+                    x0 << minRelativeDistance, 6.0;
+                    kf.setState(x0);
+
+                    Eigen::Matrix2d P0 = Eigen::Matrix2d::Identity() * 300;
+                    kf.setCovariance(P0);
+
+                    cout << "Inicializando filtro com distancia: " << minRelativeDistance << "m"
+                        << " e velocidade estimada: " << 6.0 << " m/s\n";
+
+                    firstMeasurement = false;
+                }
+
+                
+
                 busFound = true;
 
                 kf.predict();
@@ -262,7 +284,7 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
 
 
                 if (ETA <= 0) busComes++;
-                if (busComes == 3) {
+                if (busComes == 2) {
                     goneBuses.insert(closestVehicle->getTrip());
                     busComes = 0;
                     break;
@@ -276,10 +298,87 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
             }
 
             portoParser->destroyVehicles();
-            this_thread::sleep_for(seconds(120));
+            this_thread::sleep_for(seconds(60));
         }
-    }
+    } else if (dataChoice == 3){
+        std::cout << "\nUsing GTFS data to estimate upcoming arrivals at stop " << stop_id << "...\n";
 
+        std::time_t now = std::time(nullptr);
+        std::tm* local_time = std::localtime(&now);
+        int current_minutes = local_time->tm_hour * 60 + local_time->tm_min;
+
+        const int timeWindowBefore = 0;     // do agora até +15 min
+        const int timeWindowAfter = 15;     // minutos no futuro
+
+        std::vector<std::pair<std::string, int>> upcomingTrips; // trip_id, eta
+
+        for (const auto& [trip_id, trip] : trips) {
+            if (trip.getRouteId() != bus_line || trip.getDirectionId() != direction) continue;
+
+            const auto& stopTimesMap = stop.getStopTimesMap();
+            auto stopTimeIt = stopTimesMap.find(trip_id);
+            if (stopTimeIt == stopTimesMap.end()) continue;
+
+            auto stopTime = stopTimeIt->second;
+            const std::string& arrival = stopTime.getArrivalTime();
+
+            int h, m, s;
+            if (sscanf(arrival.c_str(), "%d:%d:%d", &h, &m, &s) != 3) continue;
+
+            int arrival_minutes = h * 60 + m;
+            int diff = arrival_minutes - current_minutes;
+
+            if (diff >= timeWindowBefore && diff <= timeWindowAfter) {
+                upcomingTrips.emplace_back(trip_id, diff);
+            }
+        }
+
+        if (upcomingTrips.empty()) {
+            std::cout << "No trips scheduled to arrive at this stop in the next 15 minutes.\n";
+            std::cout << "Please try again later or check the schedule.\n";
+            showGoBackMenu(0, "Check upcoming trips");
+            return;
+        } 
+        
+        int minEta = std::numeric_limits<int>::max();
+        int maxEta = std::numeric_limits<int>::min();
+        for (const auto& [trip_id, eta] : upcomingTrips) {
+            minEta = std::min(minEta, eta);
+            maxEta = std::max(maxEta, eta);
+        }
+
+        // --- Fetch contextual delay metrics from API ---
+        double delay_mean = 0.0;
+        double delay_std = 0.0;
+
+        try {
+            auto metrics = getContextualDelayMetrics(bus_line, stop_id, direction); 
+            delay_mean = metrics.first;     // avg_delay in seconds
+            delay_std = metrics.second;     // std_deviation in seconds
+        } catch (const std::exception& e) {
+            std::cerr << "Warning: Could not load API delay metrics. Using GTFS only.\n";
+        }
+
+        // --- Adjust ETA range using delay metrics ---
+        int corrected_min_eta_sec = minEta * 60 + delay_mean;
+        int corrected_max_eta_sec = maxEta * 60 + delay_mean;
+
+        int eta_low_bound = static_cast<int>(std::max(0.0, corrected_min_eta_sec - delay_std));
+        int eta_high_bound = static_cast<int>(corrected_max_eta_sec + delay_std);
+
+        std::cout << "\nAdjusted ETA window (GTFS + real delay context):\n";
+        std::cout << "Estimated arrival between "
+          << eta_low_bound / 60 << " and "
+          << eta_high_bound / 60 << " minutes\n";
+
+
+        
+
+        std::cout << "\nPress any key to return to the main menu...\n";
+        std::cin.ignore();
+        std::cin.get();
+        showMainMenu();
+    }
     cout << "Your bus has arrived!\n\nWhat would you like to do next:\n"
          << "1 - Return to main menu.\n"
          << "2 - Exit\nInput: ";

@@ -25,7 +25,7 @@ add_executable(KalmannFilter
         ${CMAKE_SOURCE_DIR}/src/main.cpp
         ${CMAKE_SOURCE_DIR}/src/services/Parser.h
         ${CMAKE_SOURCE_DIR}/src/services/KalmannFilter.cpp
-        ${CMAKE_SOURCE_DIR}/src/services/Apply_metrics.cpp  # Adicione esta linha
+        ${CMAKE_SOURCE_DIR}/src/services/Apply_metrics.cpp  
         ${CMAKE_SOURCE_DIR}/src/GTFS/agency.h
         src/GTFS/calendar.h
         src/GTFS/route.h
@@ -40,7 +40,7 @@ target_link_libraries(KalmannFilter PRIVATE curl)
 
 # JsonDataFetcher executable
 add_executable(JsonDataFetcher
-        ${CMAKE_SOURCE_DIR}/JsonFetcher/JsonDataFetcher.cpp
+        ${CMAKE_SOURCE_DIR}/src/services/JsonDataFetcher.cpp
 )
 
 # Link curl for JsonDataFetcher

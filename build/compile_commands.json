@@ -25,8 +25,8 @@
 },
 {
   "directory": "C:/Users/estagio/Documents/Leo/KalmannFilters/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/JsonDataFetcher.dir/includes_CXX.rsp -g -o CMakeFiles\\JsonDataFetcher.dir\\JsonFetcher\\JsonDataFetcher.cpp.obj -c C:\\Users\\estagio\\Documents\\Leo\\KalmannFilters\\JsonFetcher\\JsonDataFetcher.cpp",
-  "file": "C:/Users/estagio/Documents/Leo/KalmannFilters/JsonFetcher/JsonDataFetcher.cpp",
-  "output": "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj"
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/JsonDataFetcher.dir/includes_CXX.rsp -g -o CMakeFiles\\JsonDataFetcher.dir\\src\\services\\JsonDataFetcher.cpp.obj -c C:\\Users\\estagio\\Documents\\Leo\\KalmannFilters\\src\\services\\JsonDataFetcher.cpp",
+  "file": "C:/Users/estagio/Documents/Leo/KalmannFilters/src/services/JsonDataFetcher.cpp",
+  "output": "CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj"
 }
 ]

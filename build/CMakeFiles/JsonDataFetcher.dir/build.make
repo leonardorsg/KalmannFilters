@@ -71,29 +71,29 @@ include CMakeFiles/JsonDataFetcher.dir/flags.make
 CMakeFiles/JsonDataFetcher.dir/codegen:
 .PHONY : CMakeFiles/JsonDataFetcher.dir/codegen
 
-CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj: CMakeFiles/JsonDataFetcher.dir/flags.make
-CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj: CMakeFiles/JsonDataFetcher.dir/includes_CXX.rsp
-CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj: C:/Users/estagio/Documents/Leo/KalmannFilters/JsonFetcher/JsonDataFetcher.cpp
-CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj: CMakeFiles/JsonDataFetcher.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj -MF CMakeFiles\JsonDataFetcher.dir\JsonFetcher\JsonDataFetcher.cpp.obj.d -o CMakeFiles\JsonDataFetcher.dir\JsonFetcher\JsonDataFetcher.cpp.obj -c C:\Users\estagio\Documents\Leo\KalmannFilters\JsonFetcher\JsonDataFetcher.cpp
+CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj: CMakeFiles/JsonDataFetcher.dir/flags.make
+CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj: CMakeFiles/JsonDataFetcher.dir/includes_CXX.rsp
+CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj: C:/Users/estagio/Documents/Leo/KalmannFilters/src/services/JsonDataFetcher.cpp
+CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj: CMakeFiles/JsonDataFetcher.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\estagio\Documents\Leo\KalmannFilters\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj -MF CMakeFiles\JsonDataFetcher.dir\src\services\JsonDataFetcher.cpp.obj.d -o CMakeFiles\JsonDataFetcher.dir\src\services\JsonDataFetcher.cpp.obj -c C:\Users\estagio\Documents\Leo\KalmannFilters\src\services\JsonDataFetcher.cpp
 
-CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\estagio\Documents\Leo\KalmannFilters\JsonFetcher\JsonDataFetcher.cpp > CMakeFiles\JsonDataFetcher.dir\JsonFetcher\JsonDataFetcher.cpp.i
+CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\estagio\Documents\Leo\KalmannFilters\src\services\JsonDataFetcher.cpp > CMakeFiles\JsonDataFetcher.dir\src\services\JsonDataFetcher.cpp.i
 
-CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\estagio\Documents\Leo\KalmannFilters\JsonFetcher\JsonDataFetcher.cpp -o CMakeFiles\JsonDataFetcher.dir\JsonFetcher\JsonDataFetcher.cpp.s
+CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\estagio\Documents\Leo\KalmannFilters\src\services\JsonDataFetcher.cpp -o CMakeFiles\JsonDataFetcher.dir\src\services\JsonDataFetcher.cpp.s
 
 # Object files for target JsonDataFetcher
 JsonDataFetcher_OBJECTS = \
-"CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj"
+"CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj"
 
 # External object files for target JsonDataFetcher
 JsonDataFetcher_EXTERNAL_OBJECTS =
 
-JsonDataFetcher.exe: CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj
+JsonDataFetcher.exe: CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj
 JsonDataFetcher.exe: CMakeFiles/JsonDataFetcher.dir/build.make
 JsonDataFetcher.exe: CMakeFiles/JsonDataFetcher.dir/linkLibs.rsp
 JsonDataFetcher.exe: CMakeFiles/JsonDataFetcher.dir/objects1.rsp

@@ -141,30 +141,6 @@ JsonDataFetcher/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\JsonDataFetcher.dir\build.make CMakeFiles/JsonDataFetcher.dir/build
 .PHONY : JsonDataFetcher/fast
 
-JsonFetcher/JsonDataFetcher.obj: JsonFetcher/JsonDataFetcher.cpp.obj
-.PHONY : JsonFetcher/JsonDataFetcher.obj
-
-# target to build an object file
-JsonFetcher/JsonDataFetcher.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JsonDataFetcher.dir\build.make CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj
-.PHONY : JsonFetcher/JsonDataFetcher.cpp.obj
-
-JsonFetcher/JsonDataFetcher.i: JsonFetcher/JsonDataFetcher.cpp.i
-.PHONY : JsonFetcher/JsonDataFetcher.i
-
-# target to preprocess a source file
-JsonFetcher/JsonDataFetcher.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JsonDataFetcher.dir\build.make CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.i
-.PHONY : JsonFetcher/JsonDataFetcher.cpp.i
-
-JsonFetcher/JsonDataFetcher.s: JsonFetcher/JsonDataFetcher.cpp.s
-.PHONY : JsonFetcher/JsonDataFetcher.s
-
-# target to generate assembly for a file
-JsonFetcher/JsonDataFetcher.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JsonDataFetcher.dir\build.make CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.s
-.PHONY : JsonFetcher/JsonDataFetcher.cpp.s
-
 src/Application.obj: src/Application.cpp.obj
 .PHONY : src/Application.obj
 
@@ -237,6 +213,30 @@ src/services/Apply_metrics.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\KalmannFilter.dir\build.make CMakeFiles/KalmannFilter.dir/src/services/Apply_metrics.cpp.s
 .PHONY : src/services/Apply_metrics.cpp.s
 
+src/services/JsonDataFetcher.obj: src/services/JsonDataFetcher.cpp.obj
+.PHONY : src/services/JsonDataFetcher.obj
+
+# target to build an object file
+src/services/JsonDataFetcher.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JsonDataFetcher.dir\build.make CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj
+.PHONY : src/services/JsonDataFetcher.cpp.obj
+
+src/services/JsonDataFetcher.i: src/services/JsonDataFetcher.cpp.i
+.PHONY : src/services/JsonDataFetcher.i
+
+# target to preprocess a source file
+src/services/JsonDataFetcher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JsonDataFetcher.dir\build.make CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.i
+.PHONY : src/services/JsonDataFetcher.cpp.i
+
+src/services/JsonDataFetcher.s: src/services/JsonDataFetcher.cpp.s
+.PHONY : src/services/JsonDataFetcher.s
+
+# target to generate assembly for a file
+src/services/JsonDataFetcher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JsonDataFetcher.dir\build.make CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.s
+.PHONY : src/services/JsonDataFetcher.cpp.s
+
 src/services/KalmannFilter.obj: src/services/KalmannFilter.cpp.obj
 .PHONY : src/services/KalmannFilter.obj
 
@@ -271,9 +271,6 @@ help:
 	@echo ... rebuild_cache
 	@echo ... JsonDataFetcher
 	@echo ... KalmannFilter
-	@echo ... JsonFetcher/JsonDataFetcher.obj
-	@echo ... JsonFetcher/JsonDataFetcher.i
-	@echo ... JsonFetcher/JsonDataFetcher.s
 	@echo ... src/Application.obj
 	@echo ... src/Application.i
 	@echo ... src/Application.s
@@ -283,6 +280,9 @@ help:
 	@echo ... src/services/Apply_metrics.obj
 	@echo ... src/services/Apply_metrics.i
 	@echo ... src/services/Apply_metrics.s
+	@echo ... src/services/JsonDataFetcher.obj
+	@echo ... src/services/JsonDataFetcher.i
+	@echo ... src/services/JsonDataFetcher.s
 	@echo ... src/services/KalmannFilter.obj
 	@echo ... src/services/KalmannFilter.i
 	@echo ... src/services/KalmannFilter.s

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <chrono>
+#include <utility>
 
 using json = nlohmann::json;
 
@@ -29,6 +30,34 @@ static std::string httpGET(const std::string& url) {
 
     return response;
 }
+
+std::pair<double, double> getContextualDelayMetrics(const std::string& route_id, const std::string& stop_id, int direction) {
+    std::ostringstream url;
+    url << "http://130.61.19.80:8000/metrics/" << route_id << "/" << stop_id << "/" << direction;
+
+    std::string json_str = httpGET(url.str());
+    if (json_str.empty()) {
+        std::cerr << "API response vazia.\n";
+        return {0.0, 0.0};
+    }
+
+    json data = json::parse(json_str);
+    if (!data.is_object()) {
+        std::cerr << "Formato inesperado da resposta da API.\n";
+        return {0.0, 0.0};
+    }
+
+    if(data.contains("std_deviation") && data["std_deviation"].is_number() &&
+       data.contains("avg_delay") && data["avg_delay"].is_number()) {
+        double stddev = data["std_deviation"];
+        double avg_delay = data["avg_delay"];
+        return {stddev, avg_delay};
+    }
+
+    return {0.0, 0.0};
+}
+
+
 void applyContextualMetricsToKalman(KalmanFilter& kf,
                                     const std::string& route_id,
                                     const std::string& stop_id,

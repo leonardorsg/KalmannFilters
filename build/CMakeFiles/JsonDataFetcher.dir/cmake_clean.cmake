@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj"
-  "CMakeFiles/JsonDataFetcher.dir/JsonFetcher/JsonDataFetcher.cpp.obj.d"
+  "CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj"
+  "CMakeFiles/JsonDataFetcher.dir/src/services/JsonDataFetcher.cpp.obj.d"
   "JsonDataFetcher.exe"
   "JsonDataFetcher.exe.manifest"
   "JsonDataFetcher.pdb"

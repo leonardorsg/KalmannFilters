@@ -10,4 +10,6 @@ void applyContextualMetricsToKalman(KalmanFilter& kf,
                                     int direction,
                                     double& eta_adjustment_seconds);
 
+std::pair<double, double> getContextualDelayMetrics(const std::string& route_id, const std::string& stop_id, int direction);
+
 #endif // APPLY_METRICS_H
