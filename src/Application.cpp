@@ -371,8 +371,16 @@ void Application::runKalmannFilter(string bus_line, string stop_id, int directio
           << eta_low_bound / 60 << " and "
           << eta_high_bound / 60 << " minutes\n";
 
+        // Give a probability of x% that the bus will arrive within the next 10 minutes
+        int eta_10_min = 10 * 60; // 10 minutes in seconds
+        double probability = 0.0;
+        if (eta_low_bound <= eta_10_min && eta_high_bound >= eta_10_min && delay_std > 0.0) {
+            double mean = (corrected_min_eta_sec + corrected_max_eta_sec) / 2.0;
+            double z = (eta_10_min - mean) / delay_std;
+            probability = 0.5 * (1.0 + std::erf(z / std::sqrt(2.0))); // CDF normal
+        }
 
-        
+        std::cout << "Probability of arrival within 10 minutes: " << probability * 100 << "%\n";
 
         std::cout << "\nPress any key to return to the main menu...\n";
         std::cin.ignore();

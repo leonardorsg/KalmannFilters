@@ -60,7 +60,7 @@ public:
             if (!portoParsed) {
                 try {
                     this->portoParser = new Parser(std::string(DATASET_PATHS_PORTO) + "agency.txt",  std::string(DATASET_PATHS_PORTO) + "calendar.txt",  std::string(DATASET_PATHS_PORTO) + "routes.txt",  std::string(DATASET_PATHS_PORTO) + "stop_times.txt",  std::string(DATASET_PATHS_PORTO) + "stops.txt",  std::string(DATASET_PATHS_PORTO) + "trips.txt", std::string(DATASET_PATHS_PORTO) + "shapes.txt");
-                    std::cout << this->portoParser->run() << "\n";
+                    this->portoParser->run();
                     portoParsed = true;
 
                     //Print Data Parsed
@@ -71,32 +71,7 @@ public:
                 } catch (const std::exception &e) {
                     std::cerr << "Error1: " << e.what() << '\n';
                 }
-                try {
-
-                    // Parse the JSON file to load vehicles
-                    this->portoParser->parseVehicles(std::string(JSON_FILE_PATH));
-
-                    // Access the vehicles
-                    const auto &vehicles = portoParser->getVehicles();
-
-
-                    // Print vehicle details
-                    /*
-                    for (const auto &vehicle : vehicles) {
-                        std::cout << "Route: " << vehicle.getRouteId() << "\n";
-                        std::cout << "Trip: " << vehicle.getTrip() << "\n";
-                        std::cout << "Direction: " << vehicle.getDirection() << "\n";
-                        std::cout << "Agency ID: " << vehicle.getAgencyId() << "\n";
-                        std::cout << "Location: (" << vehicle.getCoordinates().Latitude << ", " << vehicle.getCoordinates().Longitude << ")\n\n";
-
-                    }
-                    */
-
-                } catch (const std::exception &e) {
-                    std::cerr << "Error2: " << e.what() << '\n';
-                }
-
-
+            
             }
         } else if (choiceString == "2") {
             if (!bostonParsed) {

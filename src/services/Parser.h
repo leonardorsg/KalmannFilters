@@ -258,7 +258,6 @@ class Parser {
                 stringToLower(agency_url);
                 stringToLower(agency_timezone);
                 Agency agency(agency_id_str, agency_name, agency_url, agency_timezone);
-                std::cout << agency_name;
                 agencyList.push_back(agency);
             }
             file.close();
